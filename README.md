@@ -23,10 +23,10 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 `-t` : Run the container in a pseudo-TTY [interactive mode]
 `-d` : Run the container in the background [detach mode]<br>
 
-**-p PORTS** : Publish or expose ports
-`-p 80` : Equivalent to `-p 80:80`
-`-p 80:80` :  Binds port `80` of the container to  port `80`  of the host machine , accessible externally
-`-p 127.0.0.1:80:80`: Binds port `80` of the container to  port `80` on `127.0.0.1` of the host machine (only accessible  by the host machine)
+`-p PORTS` : Publish or expose ports<br>
+`-p 80` : Equivalent to `-p 80:80`<br>
+`-p 80:80` :  Binds port `80` of the container to  port `80`  of the host machine , accessible externally<br>
+`-p 127.0.0.1:80:80`: Binds port `80` of the container to  port `80` on `127.0.0.1` of the host machine (only accessible  by the host machine)<br>
 `--expose 80` : Exposes port 80 of the container without publishing the port to the host system's interfaces (used mostly for communication between containers)<br>
 
 `--net` : Connect a container to a network [check Network section](#Networking)
