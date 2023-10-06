@@ -1,7 +1,7 @@
 # Docker Notes
 A cheat-sheets and quick reference guide for docker CLI and some of docker concepts
 
-### Docker CLI
+## Docker CLI
 Show commands & management commands, versions and infos
 ```bash
 $ docker #Display Docker commands
@@ -9,7 +9,7 @@ $ docker version #Show the Docker version information
 $ docker info #Display system-wide information
 ```
 
-### Containers & Images
+## Containers
 ##### Create and run a new container from an image
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
@@ -59,7 +59,7 @@ $ docker rename NAME-OLD NAME-NEW #Rename a container
 - `-l` : Return the last container   
 
 `docker stop $(docker ps -aq)` : Stop all  containers
-`docker kill [ID/NAME]`: Kill  one or more  containers by NAME or ID, stop command send _SIGTERM_ signal, while kill  sends the _SIGKILL_ signal
+`docker kill [ID/NAME]`: Kill  one or more  containers by NAME or ID, stop command sends _SIGTERM_ signal, while kill  sends the _SIGKILL_ signal
 
 `docker rm $(docker ps/image -aq)`: Remove all containers
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
@@ -79,3 +79,6 @@ $ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside
 - `-e KEY=VALUE` : Set environment variables
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/exec/#options) you can use with _docker exec_ command 
+
+
+## Images
