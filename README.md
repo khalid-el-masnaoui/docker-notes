@@ -34,7 +34,8 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 
 `image` :  The image from which the container will be created and run, a tag of the image can be specified `image:tag` . The image can be locally stored Docker images. If you use an image that is not on your system, the software pulls it from the online registry.<br>
 
-`COMMAND`: Used to execute a command inside the container , example `sh -c "echo hello-world"`<br>
+`COMMAND`: Used to execute a command inside the container , example `sh -c "echo hello-world"`,  `bash`this will grant you access the bash shell inside the container<br>
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/run/#options) you can use with the _docker run_ command
 
 **Example**
 ```bash
@@ -63,3 +64,18 @@ $ docker rename NAME-OLD NAME-NEW #Rename a container
 `docker rm $(docker ps/image -aq)`: Remove all containers
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
 - `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#Volumes) 
+
+**Access & Run shell commands Inside the container**<br>
+```bash
+$ docker container exec -it [NAME] COMMAND
+
+#examples
+$ docker container exec -it [NAME] bash #Access the bash shell of the container
+$ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside the working directory of the container
+```
+
+- `-w [DIR]` :   Working directory inside the container
+- `-u [UserName/UID]` :Username or UID under which the command is executed
+- `-e KEY=VALUE` : Set environment variables
+
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/exec/#options) you can use with _docker exec_ command 
