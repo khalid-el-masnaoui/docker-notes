@@ -32,7 +32,7 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 `--net` : Connect a container to a network [check-network-section](#Networking) <br>
 `--ip`:  Assign a static IP to containers  (you must specify subnet block for the network)<br>
 
-`image` :  The image from which the container will be created and run, a tag of the image can be specified `image:tag` . The image can be locally stored Docker images. If you use an image that is not on your system, the software pulls it from the online registry.<br>
+`image` :  The image from which the container will be created and run, a tag of the image can be specified `image:tag` . The image can be locally stored Docker images (locally built). If you use an image that is not on your system, the software pulls it from the online registry.<br>
 
 `COMMAND`: Used to execute a command inside the container , example `sh -c "echo hello-world"`,  `bash`this will grant you access the bash shell inside the container<br>
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/run/#options) you can use with the _docker run_ command
@@ -48,7 +48,7 @@ $ docker ps #Display all running docker containers
 $ docker container start [ID/NAME] #Start one or more containers by NAME or ID
 $ docker container stop [ID/NAME] #Stop one or more containers by NAME or ID
 $ docker restart [ID/NAME] #Restart one or more containers by NAME or ID
-$ docker container rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
+$ docker rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
 $ docker rename NAME-OLD NAME-NEW #Rename a container
 ```
 **Options & Additional commands**<br>
@@ -61,7 +61,7 @@ $ docker rename NAME-OLD NAME-NEW #Rename a container
 `docker stop $(docker ps -aq)` : Stop all  containers
 `docker kill [ID/NAME]`: Kill  one or more  containers by NAME or ID, stop command sends _SIGTERM_ signal, while kill  sends the _SIGKILL_ signal
 
-`docker rm $(docker ps/image -aq)`: Remove all containers
+`docker rm $(docker ps -aq)`: Remove all containers
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
 - `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#Volumes) 
 
@@ -112,3 +112,27 @@ $ docker build . -t NAME -f DOCKERFILE --rm
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
 
 Note : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
+
+**Example**
+```bash
+$ docker build . -t custom-image -f Dockerfile.dev
+```
+
+##### List , tag, remove and other docker image commands
+```bash
+$ docker images #Display all images
+$ docker rmi [ID/NAME] #Remove one or more images by NAME or ID
+$ docker tag [NAME/ID] NAME:TAG #Create a tag NAME:TAG image that refers to the source image by NAME or ID 
+$ docker history [NAME/ID] #Show the history of an image 
+```
+**Options & Additional commands**<br>
+
+`docker images` : Display all parent images 
+- `-a` :   List all images (parents & intermediates)
+- `-q` : Return only the ID of each image
+- `-l` : Return the last container   
+
+`docker rmi [ID/NAME]` : Equivalent to `docker image rm [ID/NAME]`
+
+`docker rmi $(docker images -aq)`: Remove all images
+`docker rmi $(docker images -f "dangling=true" -q)`:  Remove all _dangling_ images. (Docker images that are untagged and unused layers such the intermediate images)
