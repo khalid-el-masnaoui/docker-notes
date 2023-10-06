@@ -42,7 +42,7 @@ you can find here [the complete list of options](https://docs.docker.com/engine/
 $ docker run --name nginx:malidkha --rm -itd -p 80:80  --net=malidkha-network --ip='10.7.0.2' nginx:1.2 bash -c "echo hello-there"
 ```
 
-##### Listing , start, stop and other docker container commands
+##### List , start, stop and other docker container commands
 ```bash
 $ docker ps #Display all running docker containers
 $ docker container start [ID/NAME] #Start one or more containers by NAME or ID
