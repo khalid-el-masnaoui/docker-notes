@@ -62,3 +62,4 @@ $ docker rename NAME-OLD NAME-NEW #Rename a container
 
 `docker rm $(docker ps/image -aq)`: Remove all containers
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
+- `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#Volumes) 
