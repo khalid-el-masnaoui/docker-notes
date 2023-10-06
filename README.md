@@ -82,3 +82,19 @@ you can find here [the complete list of options](https://docs.docker.com/engine/
 
 
 ## Images
+##### Download an image from a registry (Such as Docker Hub)
+```bash
+$ docker pull image
+```
+**Options & Tags**<br>
+`image` : The name of the image to download, , a tag of the image can be specified `image:tag`.  If no tag is provided, Docker Engine uses the `:latest` tag as a default.<br>
+- `-a`  :  Download all tagged images in the repository
+-  `--platform`: Set platform if server is multi-platform capable
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/pull/#options) you can use with the _docker pull_ command
+
+**Example**
+```bash
+$ docker pull nginx #Download nginx latest image
+$ docker pull nginx:alpine #Download alpine nginx image
+```
+##### Build An image locally from a Dockerfile
