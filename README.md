@@ -98,3 +98,17 @@ $ docker pull nginx #Download nginx latest image
 $ docker pull nginx:alpine #Download alpine nginx image
 ```
 ##### Build An image locally from a Dockerfile
+
+**_Dockerfiles_** are text files that list instructions for the Docker daemon to follow when building a container image.  [check-here-to-read-about-Dockerfiles](dockerfiles.md)
+```bash
+$ docker build . -t NAME -f DOCKERFILE --rm
+```
+**Options & Tags**<br>
+- `.` : The `PATH`  specifies where to find the files for the _context_ of the build on the Docker daemon.
+- `-t NAME` : The name of the image to build, , a tag of the image can be specified `image:tag`.
+- `-f`  :  Specify the Dockerfile name from which to build the image. by default if no dockerfile is specified , docker daemon will search for a file name _Dockerfile_ in the build _context_ (Default is `PATH/Dockerfile`)
+-  `--rm`: Remove intermediate containers after a successful build
+
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
+
+Note : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
