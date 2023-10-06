@@ -9,7 +9,72 @@ $ docker version #Show the Docker version information
 $ docker info #Display system-wide information
 ```
 
+## Images
+Images are read-only templates containing instructions for creating a container. A Docker image creates containers to run on the Docker platform.
+Think of an image like a blueprint or snapshot of what will be in a container when it runs.
+[discover-docker-images-and-containers-concepts-here](docker.readme)
+##### Download an image from a registry (Such as Docker Hub)
+```bash
+$ docker pull image
+```
+**Options & Tags**<br>
+`image` : The name of the image to download, , a tag of the image can be specified `image:tag`.  If no tag is provided, Docker Engine uses the `:latest` tag as a default.<br>
+- `-a`  :  Download all tagged images in the repository
+-  `--platform`: Set platform if server is multi-platform capable
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/pull/#options) you can use with the _docker pull_ command
+
+**Example**
+```bash
+$ docker pull nginx #Download nginx latest image
+$ docker pull nginx:alpine #Download alpine nginx image
+```
+##### Build An image locally from a Dockerfile
+
+**_Dockerfiles_** are text files that list instructions for the Docker daemon to follow when building a container image.  [check-here-to-read-about-Dockerfiles](dockerfiles.md)
+```bash
+$ docker build . -t NAME -f DOCKERFILE --rm
+```
+**Options & Tags**<br>
+- `.` : The `PATH`  specifies where to find the files for the _context_ of the build on the Docker daemon.
+- `-t NAME` : The name of the image to build, , a tag of the image can be specified `image:tag`.
+- `-f`  :  Specify the Dockerfile name from which to build the image. by default if no dockerfile is specified , docker daemon will search for a file name _Dockerfile_ in the build _context_ (Default is `PATH/Dockerfile`)
+-  `--rm`: Remove intermediate containers after a successful build
+
+you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
+
+Note : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
+
+**Example**
+```bash
+$ docker build . -t custom-image -f Dockerfile.dev
+```
+
+##### List , tag, remove and other docker image commands
+```bash
+$ docker images #Display all images
+$ docker rmi [ID/NAME] #Remove one or more images by NAME or ID
+$ docker image prune #Remove unused images
+$ docker tag [NAME/ID] NAME:TAG #Create a tag NAME:TAG image that refers to the source image by NAME or ID 
+$ docker history [NAME/ID] #Show the history of an image 
+```
+**Options & Additional commands**<br>
+
+`docker images` : Display all parent images 
+- `-a` :   List all images (parents & intermediates)
+- `-q` : Return only the ID of each image
+- `-l` : Return the last container   
+
+`docker rmi [ID/NAME]` : Equivalent to `docker image rm [ID/NAME]`
+
+`docker rmi $(docker images -aq)`: Remove all images
+`docker rmi $(docker images -f "dangling=true" -q)`:  Remove all _dangling_ images. (Docker images that are untagged and unused layers such the intermediate images)
+
+`docker image prune [ID/NAME]` : by default this command has same behavior as above command (removing  all _dangling_ images)
+- `-a`:  If this flag is specified, will also remove all images not referenced by any container.
+
 ## Containers
+A container is an isolated place where an application runs without affecting the rest of the system and without the system impacting the application. 
+[discover-docker-images-and-containers-concepts-here](docker.readme)
 ##### Create and run a new container from an image
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
@@ -81,63 +146,3 @@ $ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/exec/#options) you can use with _docker exec_ command 
 
-
-## Images
-##### Download an image from a registry (Such as Docker Hub)
-```bash
-$ docker pull image
-```
-**Options & Tags**<br>
-`image` : The name of the image to download, , a tag of the image can be specified `image:tag`.  If no tag is provided, Docker Engine uses the `:latest` tag as a default.<br>
-- `-a`  :  Download all tagged images in the repository
--  `--platform`: Set platform if server is multi-platform capable
-you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/pull/#options) you can use with the _docker pull_ command
-
-**Example**
-```bash
-$ docker pull nginx #Download nginx latest image
-$ docker pull nginx:alpine #Download alpine nginx image
-```
-##### Build An image locally from a Dockerfile
-
-**_Dockerfiles_** are text files that list instructions for the Docker daemon to follow when building a container image.  [check-here-to-read-about-Dockerfiles](dockerfiles.md)
-```bash
-$ docker build . -t NAME -f DOCKERFILE --rm
-```
-**Options & Tags**<br>
-- `.` : The `PATH`  specifies where to find the files for the _context_ of the build on the Docker daemon.
-- `-t NAME` : The name of the image to build, , a tag of the image can be specified `image:tag`.
-- `-f`  :  Specify the Dockerfile name from which to build the image. by default if no dockerfile is specified , docker daemon will search for a file name _Dockerfile_ in the build _context_ (Default is `PATH/Dockerfile`)
--  `--rm`: Remove intermediate containers after a successful build
-
-you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
-
-Note : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
-
-**Example**
-```bash
-$ docker build . -t custom-image -f Dockerfile.dev
-```
-
-##### List , tag, remove and other docker image commands
-```bash
-$ docker images #Display all images
-$ docker rmi [ID/NAME] #Remove one or more images by NAME or ID
-$ docker image prune #Remove unused images
-$ docker tag [NAME/ID] NAME:TAG #Create a tag NAME:TAG image that refers to the source image by NAME or ID 
-$ docker history [NAME/ID] #Show the history of an image 
-```
-**Options & Additional commands**<br>
-
-`docker images` : Display all parent images 
-- `-a` :   List all images (parents & intermediates)
-- `-q` : Return only the ID of each image
-- `-l` : Return the last container   
-
-`docker rmi [ID/NAME]` : Equivalent to `docker image rm [ID/NAME]`
-
-`docker rmi $(docker images -aq)`: Remove all images
-`docker rmi $(docker images -f "dangling=true" -q)`:  Remove all _dangling_ images. (Docker images that are untagged and unused layers such the intermediate images)
-
-`docker image prune [ID/NAME]` : by default this command has same behavior as above command (removing  all _dangling_ images)
-- `-a`:  If this flag is specified, will also remove all images not referenced by any container.
