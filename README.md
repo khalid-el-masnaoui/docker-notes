@@ -10,7 +10,7 @@ $ docker info #Display system-wide information
 ```
 
 ### Containers & Images
-Create and run a new container from an image
+##### Create and run a new container from an image
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
 ```
@@ -38,5 +38,27 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 
 **Example**
 ```bash
-docker run --name nginx:malidkha --rm -itd -p 80:80  --net=malidkha-network --ip='10.7.0.2' nginx:1.2 bash -c "echo hello-there"
+$ docker run --name nginx:malidkha --rm -itd -p 80:80  --net=malidkha-network --ip='10.7.0.2' nginx:1.2 bash -c "echo hello-there"
 ```
+
+##### Listing , start, stop and other docker container commands
+```bash
+$ docker ps #Display all running docker containers
+$ docker container start [ID/NAME] #Start one or more containers by NAME or ID
+$ docker container stop [ID/NAME] #Stop one or more containers by NAME or ID
+$ docker restart [ID/NAME] #Restart one or more containers by NAME or ID
+$ docker container rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
+$ docker rename NAME-OLD NAME-NEW #Rename a container
+```
+**Options & Additional commands**<br>
+
+`docker ps` : Equivalent to `docker container ls` 
+- `-a` :   List all containers (running & stopped)
+- `-q` : Return only the ID of each container
+- `-l` : Return the last container   
+
+`docker stop $(docker ps -aq)` : Stop all  containers
+`docker kill [ID/NAME]`: Kill  one or more  containers by NAME or ID, stop command send _SIGTERM_ signal, while kill  sends the _SIGKILL_ signal
+
+`docker rm $(docker ps/image -aq)`: Remove all containers
+- `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
