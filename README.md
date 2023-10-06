@@ -1,5 +1,5 @@
 # Docker Notes
-A cheat-sheets and quick reference guide for docker CLI and some of docker concepts
+A cheat-sheets and quick reference guide for docker CLI commands and some of docker concepts
 
 ## Docker CLI
 Show commands & management commands, versions and infos
