@@ -49,6 +49,7 @@ $ docker container start [ID/NAME] #Start one or more containers by NAME or ID
 $ docker container stop [ID/NAME] #Stop one or more containers by NAME or ID
 $ docker restart [ID/NAME] #Restart one or more containers by NAME or ID
 $ docker rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
+$ docker container prune #Removes all stopped containers
 $ docker rename NAME-OLD NAME-NEW #Rename a container
 ```
 **Options & Additional commands**<br>
@@ -122,6 +123,7 @@ $ docker build . -t custom-image -f Dockerfile.dev
 ```bash
 $ docker images #Display all images
 $ docker rmi [ID/NAME] #Remove one or more images by NAME or ID
+$ docker image prune #Remove unused images
 $ docker tag [NAME/ID] NAME:TAG #Create a tag NAME:TAG image that refers to the source image by NAME or ID 
 $ docker history [NAME/ID] #Show the history of an image 
 ```
@@ -136,3 +138,6 @@ $ docker history [NAME/ID] #Show the history of an image
 
 `docker rmi $(docker images -aq)`: Remove all images
 `docker rmi $(docker images -f "dangling=true" -q)`:  Remove all _dangling_ images. (Docker images that are untagged and unused layers such the intermediate images)
+
+`docker image prune [ID/NAME]` : by default this command has same behavior as above command (removing  all _dangling_ images)
+- `-a`:  If this flag is specified, will also remove all images not referenced by any container.
