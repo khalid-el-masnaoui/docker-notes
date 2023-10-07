@@ -17,7 +17,7 @@ Think of an image like a blueprint or snapshot of what will be in a container wh
 ```bash
 $ docker pull image
 ```
-**Options & Tags**<br>
+**Options & Flags**<br>
 `image` : The name of the image to download, , a tag of the image can be specified `image:tag`.  If no tag is provided, Docker Engine uses the `:latest` tag as a default.<br>
 - `-a`  :  Download all tagged images in the repository
 -  `--platform`: Set platform if server is multi-platform capable
@@ -34,7 +34,7 @@ $ docker pull nginx:alpine #Download alpine nginx image
 ```bash
 $ docker build . -t NAME -f DOCKERFILE --rm
 ```
-**Options & Tags**<br>
+**Options & Flags**<br>
 - `.` : The `PATH`  specifies where to find the files for the _context_ of the build on the Docker daemon.
 - `-t NAME` : The name of the image to build, , a tag of the image can be specified `image:tag`.
 - `-f`  :  Specify the Dockerfile name from which to build the image. by default if no dockerfile is specified , docker daemon will search for a file name _Dockerfile_ in the build _context_ (Default is `PATH/Dockerfile`)
@@ -42,7 +42,7 @@ $ docker build . -t NAME -f DOCKERFILE --rm
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
 
-Note : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
+**Note** : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
 
 **Example**
 ```bash
@@ -79,7 +79,7 @@ A container is an isolated place where an application runs without affecting the
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
 ```
-**Options & Tags**<br>
+**Options & Flags**<br>
 `--name` : The name of the container, should be unique, a tag of the container can be specified (can granted the _uniqueness_ of the container) `name:tag`<br>
 
 `--rm` : Remove the container when it is stopped <br>
@@ -146,3 +146,40 @@ $ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/exec/#options) you can use with _docker exec_ command 
 
+## Docker Logs
+
+Like any other modern software, logging events and messages like warnings and errors is an inherent part of the Docker platform, which allows you to debug your applications and production issues.
+
+##### Docker Logs Commands
+```bash
+$ docker logs [OPTIONS] [NAME/ID] #Fetch logs of a container by NAME or ID
+```
+
+**Options & Flags**
+
+`docker logs`: Equivalent to `docker container logs`
+
+- `--details` : Show extra details provided to logs.
+- `--follow` or  `-f` :  Follow log output
+- `--since`: Show logs since timestamp (e.g. 2021-08-28T15:23:37Z) or relative (e.g. 56m for 56 minutes)
+- `--tail` or `-n` : all	Number of lines to show from the end of the logs
+- `--timestamps` or `-t` : Show timestamps
+- `--until` : Show logs before a timestamp (e.g. 2021-08-28T15:23:37Z) or relative (e.g. 56m for 56 minutes)
+
+**Note** : Though do note here that the above command is only functional for containers that are started with the `json-file`  or `journald` logging driver.
+
+**Note 2** : As a default, Docker uses the `json-file` logging driver, which caches container logs as JSON internally. [Read more about this logging driver](https://docs.docker.com/config/containers/logging/json-file/)
+
+**Example**
+
+```bash
+$ docker logs -f --since=10m TEST #Show the logs for the container "TEST"  for the past 10 minutes
+```
+
+##### Docker Logs Location
+
+Docker, by default, captures the standard output (and standard error) of all your containers and writes them in files using the JSON format. This is achieved using JSON File logging driver or `json-file`. These logs are by default stored at container-specific locations under `/var/lib/docker` filesystem.
+
+```bash
+/var/lib/docker/containers/container_id>/<container_id>-json.log
+```
