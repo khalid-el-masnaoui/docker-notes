@@ -92,7 +92,7 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 - `-p 80` : Equivalent to `-p 80:80`
 - `-p 80:80` :  Binds port `80` of the container to  port `80`  of the host machine , accessible externally
 - `-p 127.0.0.1:80:80`: Binds port `80` of the container to  port `80` on `127.0.0.1` of the host machine (only accessible  by the host machine)
-- `--expose 80` : Exposes port 80 of the container without publishing the port to the host system's interfaces (used mostly for communication between containers)<br>
+- `--expose 80` : Exposes port 80 of the container without publishing the port to the host system's interfaces<br>
 
 `--net` : Connect a container to a network [check-network-section](#Networking) <br>
 `--ip`:  Assign a static IP to containers  (you must specify subnet block for the network)<br>
