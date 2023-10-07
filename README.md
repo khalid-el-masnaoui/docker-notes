@@ -66,7 +66,7 @@ $ docker history [NAME/ID] #Show the history of an image
 
 `docker rmi [ID/NAME]` : Equivalent to `docker image rm [ID/NAME]`
 
-`docker rmi $(docker images -aq)`: Remove all images
+`docker rmi $(docker images -aq)`: Remove all images<br>
 `docker rmi $(docker images -f "dangling=true" -q)`:  Remove all _dangling_ images. (Docker images that are untagged and unused layers such the intermediate images)
 
 `docker image prune [ID/NAME]` : by default this command has same behavior as above command (removing  all _dangling_ images)
