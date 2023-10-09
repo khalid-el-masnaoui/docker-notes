@@ -291,7 +291,7 @@ We should note that attaching a volume to a container creates a long-term connec
 **example**
 We start a container TEST with volume  mounted to `/var/opt/project`
 ```bash
- $ docker run -v /var/opt/project TEST #Named VOLUME
+ $ docker run -v /var/opt/project TEST #Anonymous VOLUME
 
  #Later-on we stop the container and list it
  $ docker stop TEST
