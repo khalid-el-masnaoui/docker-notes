@@ -268,10 +268,15 @@ $ docker run --mount \
 - `source`: The source of the mount (volume name or directory/file path for bind mount).
 - `destination`: the path where the file or directory is mounted in the container.
 - `readonly`: is optional specifying that the data is read-only by the container 
+<br>
 
 **Note**: We prefer to use the more self-explanatory `–mount` option to specify the volume we wish to mount.
 
 **Note 2** : When using the `-v` or `--volume` flag, Docker will automatically create the bind-mounted directory on your local machine if it doesn't exist.
 When using the `--mount` flag, Docker will not create the bind-mounted directory on your local machine if it doesn't exist and generate an error.
 
-##### Bind Mounts VS Volumes
+**Note 3** :  `Bind-mounts` and `Named volumes` are persisted  and can be re-used within many containers and after re-run the container.
+`Anonymous volumes` are not to be re-used , and after re-running the container are erased (stop and start commands will preserve the contents)
+
+**Note 4** : Docker volumes is the recommended method for persisting Docker container data beyond the life of a container.
+Bind mounts are another method, but are not recommended for most situations. Bind mounts can have dependencies on the underlying host file system directory, which may change over time.
