@@ -270,7 +270,7 @@ $ docker run --mount \
 - `readonly`: is optional specifying that the data is read-only by the container 
 <br>
 
-**Note**: We prefer to use the more self-explanatory `–mount` option to specify the volume we wish to mount.
+**Note**: It  is preferred  to use the more self-explanatory `–mount` option to specify the volume we wish to mount.
 
 **Note 2** : When using the `-v` or `--volume` flag, Docker will automatically create the bind-mounted directory on your local machine if it doesn't exist.
 When using the `--mount` flag, Docker will not create the bind-mounted directory on your local machine if it doesn't exist and generate an error.
@@ -293,9 +293,8 @@ We start a container TEST with volume  mounted to `/var/opt/project`
  #Later-on we stop the container and list it
  $ docker stop TEST
  $ docker ps -a
-
-CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 
-4920602f8048 bash "docker-entrypoint.s…" 7 minutes ago Exited (0) 7 minutes ago
+  | CONTAINER ID | IMAGE | COMMAND | CREATED | STATUS | PORTS | NAMES |
+  | 4920602f8048 | bash  | "docker-entrypoint.s…" | 7 minutes ago Exited (0) | 7 minutes ago ...
 ```
 
 We could run our next container, by copying the volumes used by this one:
