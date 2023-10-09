@@ -237,7 +237,7 @@ $ docker volume prune NAME    #Remove all unused volumes and free up space:
 
 ##### Usage
 
-To use a volume , we can either specify the volume in the [dockerfile](#dockerfile.md) or the [docker-compose-file](#docker-compose.md) , as well as starting the container with a volume in the command.
+To use a volume , we can either specify the volume in the [docker-compose-file](#docker-compose.md)  or  starting the container with a volume in the command.
 
 ###### Starting a Container with a Volume
 
