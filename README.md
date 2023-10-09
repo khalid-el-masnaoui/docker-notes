@@ -223,7 +223,10 @@ $ docker volume prune NAME    #Remove all unused volumes and free up space:
 
 **Options & Flags**
 
-`docker volume create NAME`: will create a named volume,If a name is not specified, Docker <br>
+`docker volume create NAME`: will create a named volume,If a name is not specified, Docker generates a random name.
+- Using this command , we can  specify other information about our created volume. you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/volume_create/#options) you can use with this command
+
+
 `docker volume ls`: 
 - `-f`: Filer the list of volumes
 	- `-f name=dataVolume` : Return the volume names _dataVolume_
@@ -250,7 +253,7 @@ $ docker run -v ./src/data:/var/opt/project(:ro) TEST #BIND MOUNT
 
 - _2nd example_  : The above example is starting a container TEST, and attaching to it an anonymous volume (Docker gives the volume a random name that is guaranteed to be unique within a given Docker host) to persist data inside docker container folder `/var/opt/project`. 
 
--  _3rd example_  : The above example is starting a container TEST, and attaching to it source directory on the host `./src/dat` to persist data inside docker container folder `/var/opt/project`.
+-  _3rd example_  : The above example is starting a container TEST, and attaching to it source directory on the host `./src/data` to persist data inside docker container folder `/var/opt/project`.
 
 The option `(:ro)` is optional specifying that the data is read-only by the container 
 
