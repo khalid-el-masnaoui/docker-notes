@@ -242,7 +242,7 @@ To use a volume , we can either specify the volume in the [dockerfile](#dockerfi
 
 ```bash
 $ docker run -v data-volume:/var/opt/project(:ro) TEST #Named VOLUME
-$ docker run -v :/var/opt/project(:ro) TEST #Anonymous VOLUME
+$ docker run -v /var/opt/project(:ro) TEST #Anonymous VOLUME
 $ docker run -v ./src/data:/var/opt/project(:ro) TEST #BIND MOUNT
 ```
 
@@ -280,3 +280,30 @@ When using the `--mount` flag, Docker will not create the bind-mounted directory
 
 **Note 4** : Docker volumes is the recommended method for persisting Docker container data beyond the life of a container.
 Bind mounts are another method, but are not recommended for most situations. Bind mounts can have dependencies on the underlying host file system directory, which may change over time.
+
+##### Share data volumes with `--volumes-from`
+
+We should note that attaching a volume to a container creates a long-term connection between the container and the volume. Even when the container has exited, the relationship still exists. This allows us to use a container that has exited as a template for mounting the same set of volumes to a new one.
+
+**example**
+We start a container TEST with volume  mounted to `/var/opt/project`
+```bash
+ $ docker run -v /var/opt/project TEST #Named VOLUME
+
+ #Later-on we stop the container and list it
+ $ docker stop TEST
+ $ docker ps -a
+
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES 
+4920602f8048 bash "docker-entrypoint.s…" 7 minutes ago Exited (0) 7 minutes ago
+```
+
+We could run our next container, by copying the volumes used by this one:
+```bash
+$ docker run --volumes-from 4920 \
+  bash:latest \
+  bash -c "ls /var/opt/project"
+```
+
+**Note** : `--volumes-from`can be use in order to Back up, restore, or migrate data volumes.
+In practice `--volumes-from` is usually used to link volumes between running containers (volume data migration).
