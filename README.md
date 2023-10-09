@@ -1,7 +1,7 @@
 # Docker Notes
 A cheat-sheets and quick reference guide for docker CLI commands and some of docker concepts
 
-## Docker CLI
+## Docker CLI :whale:
 Show commands & management commands, versions and infos
 ```bash
 $ docker #Display Docker commands
@@ -9,7 +9,7 @@ $ docker version #Show the Docker version information
 $ docker info #Display system-wide information
 ```
 
-## Images
+## Images :framed_picture:
 Images are read-only templates containing instructions for creating a container. A Docker image creates containers to run on the Docker platform.
 Think of an image like a blueprint or snapshot of what will be in a container when it runs.
 [discover-docker-images-and-containers-concepts-here](docker.readme)
@@ -72,7 +72,7 @@ $ docker history [NAME/ID] #Show the history of an image
 `docker image prune [ID/NAME]` : by default this command has same behavior as above command (removing  all _dangling_ images)
 - `-a`:  If this flag is specified, will also remove all images not referenced by any container.
 
-## Containers
+## Containers :ship:
 A container is an isolated place where an application runs without affecting the rest of the system and without the system impacting the application. 
 [discover-docker-images-and-containers-concepts-here](docker.readme)
 ##### Create and run a new container from an image
@@ -146,7 +146,7 @@ $ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/exec/#options) you can use with _docker exec_ command 
 
-## Docker Logs
+## Docker Logs :spiral_notepad:
 
 Like any other modern software, logging events and messages like warnings and errors is an inherent part of the Docker platform, which allows you to debug your applications and production issues.
 
