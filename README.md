@@ -117,7 +117,8 @@ $ docker restart [ID/NAME] #Restart one or more containers by NAME or ID
 $ docker rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
 $ docker container prune #Removes all stopped containers
 $ docker rename NAME-OLD NAME-NEW #Rename a container
-$ docker container inspect [ID/NAME]  #Display detailed information on one or more containers such as connected Networks settings , volumes , Port Bindings ...
+$ docker container inspect [ID/NAME]  #Display detailed information on one or more containers such as connected Networks settings, container IP,  volumes , Port Bindings ...
+$ docker attach  [ID/NAME] #Attach to a running container and view its output
 ```
 **Options & Additional commands**<br>
 
