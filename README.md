@@ -1,5 +1,42 @@
 # Docker Notes
-A cheat-sheets and quick reference guide for docker CLI commands and some of docker concepts
+A cheat-sheets and quick but rich reference guide for docker CLI commands and some of docker concepts
+
+# Table Of Contents
+
+- **[Docker CLI](#docker-cli-whale)**
+- **[Images](#images-framed_picture)**
+	- **[Download an image from a registry](#download-an-image-from-a-registry-such-as-docker-hub)**
+	- **[Build An image locally from a Dockerfile](#build-an-image-locally-from-a-dockerfile)**
+	- **[List , tag, remove and other docker image commands](#list--tag-remove-and-other-docker-image-commands)**
+- **[Containers](#containers-ship)**
+	- **[Create and run a new container from an image](#create-and-run-a-new-container-from-an-image)**
+	- **[List , start, stop and other docker container commands](#list--start-stop-and-other-docker-container-commands)**
+	- **[Access & Run shell commands Inside the container](#access-&-run-shell-commands-inside-the-container)**
+- **[Docker Logs](#docker-logs-spiral_notepad)**
+	- **[Docker Logs Commands](#docker-logs-commands)**
+	- **[Docker Logs Location](#docker-logs-location)**
+	- **[Docker Logs Rotation Configuration](#docker-logs-rotation-configuration)**
+- **[Volumes](#volumes-card_file_box)**
+    - **[The Docker File System](#the-docker-file-system)**
+    - **[Creating and managing a volume](#creating-and-managing-a-volume)**
+    - **[Usage](#usage)**
+	- **[Starting a Container with a Volume](#starting-a-container-with-a-volume)**
+		- **[Using -v (--volume)](#using--v-(--volume))**
+		- **[Using –mount](#using---mount)**
+    - **[Share data volumes with --volumes-from](#share-data-volumes-with---volumes-from)**
+- **[Networking](#networking)**
+	- **[How it works](#how-it-works)**
+	- **[Network drivers](#network-drivers)**
+	- **[Creating and managing a network](#creating-and-managing-a-network)**
+	-  **[Usage](#usage)**
+		-  **[Connect a container to a network)](#connect-a-container-to-a-network)**
+- **[Monitoring and Manage docker containers](#networking)**
+	- **[Introduction](#introduction)**
+	- **[Monitor docker containers](#monitor-docker-containers)**
+	- **[Manage docker containers resources](#manage-docker-containers-resources)**
+		-  **[Configure System to Enable Limiting Resources]()**
+		-  **[Limit Docker Container Memory Access]()**
+		-  **[Limit Docker Container CPU Usage]()**
 
 ## Docker CLI :whale:
 Show commands & management commands, versions and infos
@@ -134,7 +171,7 @@ $ docker attach  [ID/NAME] #Attach to a running container and view its output
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
 - `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#Volumes) 
 
-**Access & Run shell commands Inside the container**<br>
+##### Access & Run shell commands Inside the container
 ```bash
 $ docker container exec -it [NAME] COMMAND
 
@@ -169,9 +206,12 @@ $ docker logs [OPTIONS] [NAME/ID] #Fetch logs of a container by NAME or ID
 - `--timestamps` or `-t` : Show timestamps
 - `--until` : Show logs before a timestamp (e.g. 2021-08-28T15:23:37Z) or relative (e.g. 56m for 56 minutes)
 
+`docker logs -f [NAME/ID] &> malidkha.log &` : Redirect all live logs to a specific file. (background task)
+
+
 **Note** : Though do note here that the above command is only functional for containers that are started with the `json-file`  or `journald` logging driver.
 
-**Note 2** : As a default, Docker uses the `json-file` logging driver, which caches container logs as JSON internally. [Read more about this logging driver](https://docs.docker.com/config/containers/logging/json-file/)
+**Note 2** : As a default, Docker uses the `json-file` logging driver, which caches container logs as JSON internally (On the host). [Read more about this logging driver](https://docs.docker.com/config/containers/logging/json-file/)
 
 **Example**
 
@@ -187,6 +227,30 @@ Docker, by default, captures the standard output (and standard error) of all you
 /var/lib/docker/containers/container_id>/<container_id>-json.log
 ```
 
+##### Docker Logs Rotation Configuration
+
+we can configure logs rotation when running a container with `docker run`command or via a global docker daemon setting
+
+```bash
+docker run --log-opt max-size=1k --log-opt max-file=5 <image-id/name>
+```
+
+Add the following code to  `/etc/docker/daemon.json` (global settings)
+```bash
+	{
+	  "log-driver": "json-file",
+		"log-opts": {
+			"max-size": "1k",
+			"max-file": "5"
+		}
+	  }
+
+#Save the file and restart docker
+$ systemctl restart docker
+```
+
+-  `max-size`: The maximum size of the log before it is rolled. A positive integer plus a modifier representing the unit of measure (k, m, or g)
+-  `max-file`: The maximum number of log files that can be present. If rolling the logs creates excess files, the oldest file is removed. A positive integer. Defaults to 5.
 ## Volumes :card_file_box:
 All the changes inside the container are lost when the container stops. If we want to keep data between runs or to share data between different containers, Docker volumes and bind mounts come into play.
 
@@ -408,3 +472,99 @@ $ docker network disconnect NAME <container-id/name>
  - If need to connect using container names and ip-addresses while on two different networks -- use `--link` (deprecated,  use user-defined networks instead)
  - Two containers on different networks can't connect via ip-addresses or container names( _iptables_ rules drop the packets)
  - Container on whatever network can connect with the host
+
+
+## Monitoring and Manage docker containers
+
+##### Introduction
+Docker container monitoring is the process of tracking the performance, health, and resource utilization of applications running in Docker containers
+Some of the standard metrics monitored in the Docker container are:
+
+1. **Resource utilization metrics**: Metrics that refer to the resources allocated to and used by the Docker containers. Usage can indicate if the container is experiencing a workload too heavy, optimal, or light and helps troubleshoot issues with the application running inside the container. Some examples of these metrics include:
+    - _CPU usage_: The percentage of CPU time being used by the container
+    - _Memory usage_: The amount of memory being used
+    - _Disk usage_: The amount of disk space being used
+    - _Network usage_: The amount of network bandwidth being used
+2. **Container status metrics**: These metrics refer to the status of the Docker containers to help track availability, overall health, and identify issues related to the container. Some examples of these metrics are:
+    - _Container up-time_: The amount of time that the container has been running. High up-time can be an indicator of the stability and reliability of the container
+    - _Container restarts_: The number of times that the container has been restarted. A high number of restarts can be an indicator of issues with the container or the application running inside it
+    - _Container exits_: The number of times that the container has exited. High numbers of container exits can be an indicator of issues
+    - _Status_: This metric refers to the status of the container itself (e.g. running, stopped, restarting)
+3. **Application performance metrics**: Metrics that refer to the performance of the applications running inside Docker containers. Some examples are:
+    - _Response time_: The time it takes for the containerized application to respond to a request. Tracking response time can help identify performance issues and ensure that the application is responsive to end users
+    - _Request rate_: The number of requests being handled by the containerized application per second
+    - _Error rate_: The number of errors encountered by the containerized application
+4. **Host machine metrics**: Metrics that refer to the performance of the physical or virtual machine on which Docker is running. These metrics are essential to monitor because they can help identify issues related to the overall health and performance of the host machine, which can impact the performance and availability of the Docker containers running on the host. Some examples are:
+    - _CPU usage_
+    - _Memory usage_
+    - _Disk usage_
+    - _Network usage_
+5. **Logs**: Logs provide a detailed record of the activities and events inside the container. It refers to tracking and analyzing the log output generated by a Docker container
+6. **Processes**: Programs or tasks that are running inside the container
+
+##### Monitor docker containers
+There are several ways to monitor Docker containers in real time:
+```bash
+$ docker logs [NAME/ID] #Fetch logs of a container by NAME or ID
+$ docker attach [NAME/ID] #Attach to a running container and view its output
+$ docker top [NAME/ID] #Show running processes in a container
+$ docker events [NAME/ID] #Get real-time events from the  container server such as restarts , starts ....
+$ docker stats [NAME/ID] #Show Resource usage statisticsfor one or more containers (or all) such  CPU and memory usage 
+$ docker system df -v #Show docker disk usage
+```
+
+**Note** : You can find here [the complete list of the events](https://docs.docker.com/engine/reference/commandline/events/)
+
+**Note 2** :Several third-party tools can monitor Docker containers in real time. These tools typically provide more advanced monitoring and visualization features, and integration with other IT systems and tools such _Prometheus_ and _cAdivsor_.
+
+
+##### Manage docker containers resources
+
+By default, Docker containers have access to the full RAM and CPU resources of the host. Leaving them to run with these default settings may lead to performance bottlenecks.
+If you don’t limit Docker’s memory and CPU usage, Docker can use all the systems resources.
+
+To limit a container resources , we can either specify that in the [docker-compose-file](#docker-compose.md)  or  using the `docker run` command,
+
+**Configure System to Enable Limiting Resources**
+
+Many of these features require your kernel to support Linux capabilities. To check for support, you can use the `docker info` command. If a capability is disabled in your kernel, you may see a warning at the end of the output like the following:
+
+```bash 
+WARNING: No swap limit support
+```
+
+If not enabled , enable limiting resources following those [instructions](https://docs.docker.com/engine/install/troubleshoot/#kernel-cgroup-swap-limit-capabilities)
+
+**Limit Docker Container Memory Access**
+
+There are several RAM limitations you can set for a Docker container. Some of them include:
+
+- Configuring the maximum amount of memory a container can use.
+- Defining the amount of memory a Docker container can swap to disk.
+- Setting the soft limit for the amount of memory assigned to a container.
+
+```bash
+$ docker run -it --memory="[memory_limit]" <image-id/name> #Set Maximum Memory Access
+
+$ docker run -it --memory="[memory_limit]" --memory-swap="[memory_limit]" <image-id/name> # Set Swap to Disk Memory Limit
+
+$ docker run -it --memory="1g" --memory-reservation="750m" <image-id/name> #Set Soft Limit to Container Memory
+```
+
+`--memory="[memory_limit]"`:  The value of **`memory_limit`** should be a positive integer followed by the suffix **b**, **k**, **m**, or **g** (short for bytes, kilobytes, megabytes, or gigabytes). For example, to limit the container with 1 GB of RAM, add **`--memory="1g"`**.
+
+`--memory-swap="[memory_limit]"`:  Using the **`swap`** option allows you to store data even after all RAM assigned to the container has been used up. It does this by ignoring the memory limitation and writing directly to the disk. Although this is a useful feature, it is not a recommended practice as it slows down performance. Value should be more than `--memory` (The swap includes the total amount of **non-swap memory** plus the amount of **swap memory** reserved as backup.)
+
+`--memory-reservation="[memory_limit]"` : Limiting the memory usage of a container with **`--memory`** is essentially setting a hard limit that cannot be surpassed. Alternatively, you can set a soft limit (**`--memory-reservation`**) which warns when the container reaches the end of its assigned memory but doesn’t stop any of its services.
+
+**Limit Docker Container CPU Usage**
+
+There are several ways to define how much CPU resources from the host machine you want to assign to containers.
+
+```bash
+$ docker run -it --cpus="1.0" <image-id/name> # The container will have access to only 1 CPU core
+
+$ docker run -it --cpus-shares="700" <image-id/name> # The container will have a greater or lesser proportion of CPU cycles. By default, this is set to 1024.
+```
+
+Read more about CPU and MEMORY resources constraints [here](https://docs.docker.com/config/containers/resource_constraints/)
