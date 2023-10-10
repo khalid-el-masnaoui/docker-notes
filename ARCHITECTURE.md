@@ -1,7 +1,7 @@
 
 ## Docker Architecture
 
-Notes about docker , docker architecture and how it works and other docker concepts.
+Notes about docker , docker architecture,  how docker works and other docker concepts.
 
 
 # Table Of Contents
