@@ -309,3 +309,23 @@ $ docker run --volumes-from 4920 \
 
 **Note** : `--volumes-from`can be use in order to Back up, restore, or migrate data volumes.
 In practice `--volumes-from` is usually used to link volumes between running containers (volume data migration).
+
+## Networking
+Networking is about communication among processes, and Docker’s networking is no different. Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
+
+![](https://camo.githubusercontent.com/0caf43acba7beb411dca0af77c2d6f20e93ff0a19139c190382674efc3b1620f/68747470733a2f2f676f6c646d616e6e2e706c2f696d616765732f646f636b65722d6e6574776f726b2f6e6574776f726b2e706e67)
+##### How it works
+Docker uses your host’s network stack to implement its networking system. It works by manipulating **_iptables_** rules to route traffic to your containers. This also provides isolation between Docker networks and your host.
+_iptables_ is the standard Linux packet filtering tool. Rules added to _iptables_ define how traffic is routed as it passes through your host’s network stack. Docker networks add filtering rules which direct matching  traffic to your container’s application. The rules are automatically configured, so you don’t need to manually interact with _iptables_.
+
+Docker supports different types of networks via network drivers, each fit for certain use cases.
+
+##### Network drivers
+There are several default network drivers available in Docker and some can be installed with the help of plugins, Command to see the list of containers in Docker mentioned below.
+
+1. **bridge:** If you build a container without specifying the kind of driver, the container will only be created in the bridge network, which is the default network. 
+2. **host:** Containers will not have any IP address they will be directly created in the system network which will remove isolation between the docker host and containers. 
+3. **none:** IP addresses won’t be assigned to containers. These containments are not accessible to us from the outside or from any other container.
+4. **overlay:** overlay network will enable the connection between multiple Docker demons and make different Docker swarm services communicate with each other.
+5. **ipvlan:** Users have complete control over both IPv4 and IPv6 addressing by using the IPvlan driver.
+6. **macvlan:** macvlan driver makes it possible to assign MAC addresses to a container.
