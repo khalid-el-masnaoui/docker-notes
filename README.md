@@ -323,9 +323,13 @@ Docker supports different types of networks via network drivers, each fit for ce
 ##### Network drivers
 There are several default network drivers available in Docker and some can be installed with the help of plugins, Command to see the list of containers in Docker mentioned below.
 
-1. **bridge:** If you build a container without specifying the kind of driver, the container will only be created in the bridge network, which is the default network. 
-2. **host:** Containers will not have any IP address they will be directly created in the system network which will remove isolation between the docker host and containers. 
-3. **none:** IP addresses won’t be assigned to containers. These containments are not accessible to us from the outside or from any other container.
-4. **overlay:** overlay network will enable the connection between multiple Docker demons and make different Docker swarm services communicate with each other.
+1. **bridge:** The `bridge` network represents the `docker0` network present in all Docker installations. If you build a container without specifying the kind of driver, the container will only be created in the bridge network, which is the default network. 
+
+3. **host:** The `host` network adds a container on the host’s network stack. As far as the network is concerned, _there is no isolation between the host machine and the container_. Containers will not have any IP address they will be directly created in the system network which will remove isolation between the docker host and containers.  For instance, if you run a container that runs a web server on port 80 using host networking, the web server is available on port 80 of the host machine.
+
+3. **none:** The `none` network adds a container to a container-specific network stack. That container lacks a network interface. IP addresses won’t be assigned to containers. These containers are not accessible to us from the outside or from any other container. 
+
+4. **overlay:**  The `overlay` network will enable the connection between multiple Docker daemons and make different Docker swarm services communicate with each other.
+
 5. **ipvlan:** Users have complete control over both IPv4 and IPv6 addressing by using the IPvlan driver.
-6. **macvlan:** macvlan driver makes it possible to assign MAC addresses to a container.
+7. **macvlan:**  The `macvlan` driver makes it possible to assign MAC addresses to a container.
