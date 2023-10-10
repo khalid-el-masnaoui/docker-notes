@@ -48,4 +48,4 @@ Users can also create new images from existing ones and use the `docker push` co
 
 **Note** :Docker images can be created through [Dockerfiles](dockerfile.md)
 
-![](https://www.markbuckler.com/img/docker_high_level.png)
+![](images/docker_container_images.jpg)
