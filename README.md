@@ -24,13 +24,13 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
 		- **[Using -v (--volume)](#using-v)**
 		- **[Using –mount](#using-mount)**
     - **[Share data volumes with --volumes-from](#share-data-volumes-with---volumes-from)**
-- **[Networking](#networking)**
+- **[Networking](#networking-earth_africa)**
 	- **[How it works](#how-it-works)**
 	- **[Network drivers](#network-drivers)**
 	- **[Creating and managing a network](#creating-and-managing-a-network)**
 	-  **[Usage](#usage)**
 		-  **[Connect a container to a network)](#connect-a-container-to-a-network)**
-- **[Monitoring and Manage docker containers](#networking)**
+- **[Monitoring and Manage docker containers](#monitoring-and-manage-docker-containers-oncoming_police_car)**
 	- **[Introduction](#introduction)**
 	- **[Monitor docker containers](#monitor-docker-containers)**
 	- **[Manage docker containers resources](#manage-docker-containers-resources)**
@@ -377,7 +377,8 @@ $ docker run --volumes-from 4920 \
 **Note** : `--volumes-from`can be use in order to Back up, restore, or migrate data volumes.
 In practice `--volumes-from` is usually used to link volumes between running containers (volume data migration).
 
-## Networking
+## Networking :earth_africa:
+
 Networking is about communication among processes, and Docker’s networking is no different. Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
 
 ![](https://camo.githubusercontent.com/0caf43acba7beb411dca0af77c2d6f20e93ff0a19139c190382674efc3b1620f/68747470733a2f2f676f6c646d616e6e2e706c2f696d616765732f646f636b65722d6e6574776f726b2f6e6574776f726b2e706e67)
@@ -474,7 +475,7 @@ $ docker network disconnect NAME <container-id/name>
  - Container on whatever network can connect with the host
 
 
-## Monitoring and Manage docker containers
+## Monitoring and Manage docker containers :oncoming_police_car:
 
 ##### Introduction
 Docker container monitoring is the process of tracking the performance, health, and resource utilization of applications running in Docker containers
