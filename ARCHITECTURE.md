@@ -52,3 +52,82 @@ Users can also create new images from existing ones and use the `docker push` co
 <p align="center">
 <img src="./images/docker_container_images.jpg"/>
 </p>
+
+## Docker Core Architecture
+
+##### Docker core architecture
+
+When Docker was initially launched, it had a _monolithic architecture_. Now it is separated into the following three different components:
+
+1. Docker Engine (`dockerd`)
+2. docker-containerd (`containerd`)
+3. docker-runc (`runc`)
+
+<p align="center">
+<img src="./images/docker_core_architecture.png"/>
+</p>
+
+###### Docker Engine
+
+Docker engine comprises the docker daemon, an API interface, and Docker CLI. Docker daemon (`dockerd`) runs continuously as `dockerd` systemd service. It is responsible for building the docker images.
+
+To manage images and run containers, `dockerd` calls the `docker-containerd` APIs.
+
+
+###### docker-containerd (`containerd`)
+
+`containerd` is another system daemon service than is responsible for downloading the docker images and running them as a container. It exposes its API to receive instructions from the `dockerd` service
+
+###### docker-runc
+
+`runc` is the container runtime responsible for creating the namespaces and cgroups required for a container. It then runs the container commands inside those namespaces. runc runtime is implemented as per the _OCI specification_.
+
+**Note** : `containerd` is responsible for _managing_ the container and `runc` is responsible for _running_ the containers (create namespaces, cgroups and run commands inside the container) with the inputs from `containerd`
+##### How Does Docker Work?
+
+We will understand Docker Workflow  by having a clear look at its  **high-level docker architecture**.
+
+<p align="center">
+<img src="./images/docker_architecture.png"/>
+</p>
+
+Docker works on a _client-server architecture_. It includes the _docker client_, _docker host_, and _docker registry_. The docker client is used for triggering docker commands (CLI), the docker host is used to running the docker daemon (`dockerd`), and the docker registry to store docker images.
+
+###### Docker host
+
+Docker Host is used to provide an environment to execute and run applications. It contains the docker daemon, images, containers, networks, and storage.
+###### Docker daemon
+
+The docker daemon (`dockerd`) monitors API request and control docker objects like containers, images, volumes, and networks. For managing docker services, a daemon can also communicate with other daemons.
+
+By default, the docker daemon listens to the `docker.sock` UNIX socket. If you have any use case to access the docker API remotely, you need to expose it over a host port.
+###### Docker client
+
+The docker client is the major way that provides communication between many dockers users to Docker. The client sends commands (docker API) used by the users such as `docker run` to the _dockerd_. To manage docker services, docker clients can be communicated with more than one daemon.
+
+Docker Client uses Command Line Interface (CLI) to run many commands , mainly : 
+
+- `docker build` : building images from [Dockerfiles](#dockerfile)
+- `docker pull` :  Pulling images from the Docker image repository (The docker registry)
+- `docker run` : Starting a container
+
+###### Dockerfile
+
+Docker has a concept of `Dockerfile` that is used for building the image. A Dockerfile a text file that contains one command (instructions) per line.
+
+
+##### **Docker Volumes**
+
+All the changes inside the container are lost when the container stops. If we want to keep data between runs or to share data between different containers, Docker volumes and bind mounts come into play.
+
+Volumes are managed by Docker to allow data to be written outside the container instance, which allows it to persist outside of the actual container instance’s lifecycle.
+
+This option is what makes containers capable of handling persistent data, which allows databases and other data-driven applications to run inside Docker without worrying about data loss. Storage drivers can take advantage of cloud, network-attached, and other high-performance storage subsystems while providing the best performance characteristics to support an application’s needs.
+
+###### **Docker Networks**
+
+Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
+
+Docker uses your host’s network stack to implement its networking system. It works by manipulating **_iptables_** rules to route traffic to your containers. This also provides isolation between Docker networks and your host.
+
+Docker supports different types of networks via network drivers, each fit for certain use cases.

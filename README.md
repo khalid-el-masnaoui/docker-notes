@@ -253,6 +253,7 @@ $ systemctl restart docker
 -  `max-size`: The maximum size of the log before it is rolled. A positive integer plus a modifier representing the unit of measure (k, m, or g)
 -  `max-file`: The maximum number of log files that can be present. If rolling the logs creates excess files, the oldest file is removed. A positive integer. Defaults to 5.
 ## Volumes :card_file_box:
+
 All the changes inside the container are lost when the container stops. If we want to keep data between runs or to share data between different containers, Docker volumes and bind mounts come into play.
 
 #####  The Docker File System
