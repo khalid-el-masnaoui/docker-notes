@@ -439,7 +439,7 @@ $ docker network prune NAME    #Remove all unused networks
 $ docker network create --subnet 10.7.0.0/16 --gateway 10.7.7.7 malidkha-network
 ```
 
- <h5 id="usage-network">Usage</h5>
+ <h5><span id="usage-network">Usage</span></h5>
 
 To use a network with a container , we can either specify the network in the [docker-compose-file](app://obsidian.md/index.html#docker-compose.md) or connect a container to a network.
 
