@@ -56,6 +56,7 @@ $ docker rmi [ID/NAME] #Remove one or more images by NAME or ID
 $ docker image prune #Remove unused images
 $ docker tag [NAME/ID] NAME:TAG #Create a tag NAME:TAG image that refers to the source image by NAME or ID 
 $ docker history [NAME/ID] #Show the history of an image 
+$ docker image inspect [ID/NAME]  #Display detailed information on one or more images such as Exposed Ports, Environement variables..
 ```
 **Options & Additional commands**<br>
 
@@ -116,6 +117,7 @@ $ docker restart [ID/NAME] #Restart one or more containers by NAME or ID
 $ docker rm [ID/NAME] #Remove one or more stppped containers by NAME or ID
 $ docker container prune #Removes all stopped containers
 $ docker rename NAME-OLD NAME-NEW #Rename a container
+$ docker container inspect [ID/NAME]  #Display detailed information on one or more containers such as connected Networks settings , volumes , Port Bindings ...
 ```
 **Options & Additional commands**<br>
 
@@ -366,7 +368,42 @@ $ docker network prune NAME    #Remove all unused networks
 - `--subnet`: Subnet in CIDR format that represents a network segment
 - `--gateway` : IPv4 or IPv6 Gateway for the master subnet
 -  You can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/network_create/#options) you can use with this command
-- Example : 
+-  Example : 
 ```bash
 $ docker network create --subnet 10.7.0.0/16 --gateway 10.7.7.7 malidkha-network
 ```
+
+##### Usage
+
+To use a network with a container , we can either specify the network in the [docker-compose-file](app://obsidian.md/index.html#docker-compose.md) or connect a container to a network.
+
+###### Connect a container to a network
+
+```bash
+$ docker network connect NAME <container-id/name> # Connect a running container to a network
+$  docker run -itd --network=NAME <image-name> # Connect a container to a network when it starts
+```
+
+You can specify the IP address you want to be assigned to the container's interface.
+
+```bash
+$ docker network connect --ip 10.7.0.2 NAME <container-id/name>
+$ docker run -itd --net=NAME --ip='10.7.0.2' <image-name>
+```
+
+ Use `docker network disconnect` to remove a container from the network.
+```bash
+$ docker network disconnect NAME <container-id/name>
+```
+
+
+**Note**: To verify the container is connected, use the `docker network inspect` command or `docker container inspect` command.
+
+**Note 2** : One container can be connected to many networks, and One network can be attached to many containers.
+
+**Note 3** : 
+-  Two containers on same the default bridge network can communicate only by ip-addresses
+-  Two containers on same the same bridge network (user-defined network) can communicate using both container names and ip-addresses.
+ - If need to connect using container names and ip-addresses while on two different networks -- use `--link` (deprecated,  use user-defined networks instead)
+ - Two containers on different networks can't connect via ip-addresses or container names( _iptables_ rules drop the packets)
+ - Container on whatever network can connect with the host
