@@ -261,8 +261,9 @@ A docker container runs the software stack defined in an [image](#images-framed
 
 So, any file change inside the container creates a working copy in the read-write layer. However, **when the container is stopped or deleted, that read-write layer is lost**.
 
-
-![](https://www.baeldung.com/wp-content/uploads/2021/01/layers.png)
+<p align="center">
+<img src="https://www.baeldung.com/wp-content/uploads/2021/01/layers.png"/>
+</p>
 
 When it comes to storing persistent docker container data , we have three options **Volumes**,  **Bind Mounts** and **Tmpfs mounts**
 
@@ -413,7 +414,10 @@ In practice `--volumes-from` is usually used to link volumes between running con
 
 Networking is about communication among processes, and Docker’s networking is no different. Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
 
-![](https://camo.githubusercontent.com/0caf43acba7beb411dca0af77c2d6f20e93ff0a19139c190382674efc3b1620f/68747470733a2f2f676f6c646d616e6e2e706c2f696d616765732f646f636b65722d6e6574776f726b2f6e6574776f726b2e706e67)
+<p align="center">
+<img src="https://camo.githubusercontent.com/0caf43acba7beb411dca0af77c2d6f20e93ff0a19139c190382674efc3b1620f/68747470733a2f2f676f6c646d616e6e2e706c2f696d616765732f646f636b65722d6e6574776f726b2f6e6574776f726b2e706e67"/>
+</p>
+
 ##### How it works
 Docker uses your host’s network stack to implement its networking system. It works by manipulating **_iptables_** rules to route traffic to your containers. This also provides isolation between Docker networks and your host.
 _iptables_ is the standard Linux packet filtering tool. Rules added to _iptables_ define how traffic is routed as it passes through your host’s network stack. Docker networks add filtering rules which direct matching  traffic to your container’s application. The rules are automatically configured, so you don’t need to manually interact with _iptables_.
