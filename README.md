@@ -23,7 +23,7 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
 		- **[Starting a Container with a Volume](#starting-a-container-with-a-volume)**
 		- **[Using -v (--volume)](#using-v)**
 		- **[Using –mount](#using-mount)**
-    - **[What and When to use a specific volume type](#what_and_when_to_use_a_specific_volume_type)**
+    - **[What and When to use a specific volume type](#what-and-when-to-use-a-specific-volume-type)**
     - **[Share data volumes with --volumes-from](#share-data-volumes-with---volumes-from)**
 - **[Networking](#networking-earth_africa)**
 	- **[How it works](#how-it-works)**
