@@ -19,7 +19,10 @@ Notes about docker , docker architecture and how it works and other docker conce
 	- **[How Does Docker Work?](#build-an-image-locally-from-a-dockerfile)**
 		- **[Docker host](#)**
 		- **[Docker daemon](#)**
-	        - **[Docker client](#)**
+		- **[Docker client](#)**
+		- **[Dockerfile](#)**
+		- **[Docker volumes](#)**
+		- **[Docker networks](#)**
 
 ## What is Docker
 
@@ -140,7 +143,7 @@ Docker Client uses Command Line Interface (CLI) to run many commands , mainly :
 Docker has a concept of `Dockerfile` that is used for building the image. A Dockerfile a text file that contains one command (instructions) per line.
 
 
-##### **Docker Volumes**
+###### Docker volumes
 
 All the changes inside the container are lost when the container stops. If we want to keep data between runs or to share data between different containers, Docker volumes and bind mounts come into play.
 
@@ -148,7 +151,7 @@ Volumes are managed by Docker to allow data to be written outside the container 
 
 This option is what makes containers capable of handling persistent data, which allows databases and other data-driven applications to run inside Docker without worrying about data loss. Storage drivers can take advantage of cloud, network-attached, and other high-performance storage subsystems while providing the best performance characteristics to support an application’s needs.
 
-###### **Docker Networks**
+###### Docker networks
 
 Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
 
