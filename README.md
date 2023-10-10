@@ -21,8 +21,8 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
     - **[Creating and managing a volume](#creating-and-managing-a-volume)**
     - **[Usage](#usage)**
 	- **[Starting a Container with a Volume](#starting-a-container-with-a-volume)**
-		- **[Using -v (--volume)](#using--v-(--volume))**
-		- **[Using –mount](#using---mount)**
+		- **[Using -v (--volume)](#using-v)**
+		- **[Using –mount](#using-mount)**
     - **[Share data volumes with --volumes-from](#share-data-volumes-with---volumes-from)**
 - **[Networking](#networking)**
 	- **[How it works](#how-it-works)**
@@ -35,8 +35,8 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
 	- **[Monitor docker containers](#monitor-docker-containers)**
 	- **[Manage docker containers resources](#manage-docker-containers-resources)**
 		-  **[Configure System to Enable Limiting Resources](#manage-res-configs)**
-		-  **[Limit Docker Container Memory Access]()**
-		-  **[Limit Docker Container CPU Usage]()**
+		-  **[Limit Docker Container Memory Access](#limit-memory)**
+		-  **[Limit Docker Container CPU Usage](#limit-cpu)**
 
 ## Docker CLI :whale:
 Show commands & management commands, versions and infos
@@ -308,7 +308,7 @@ To use a volume , we can either specify the volume in the [docker-compose-file](
 
 ###### Starting a Container with a Volume
 
-**Using -v (--volume)**
+<span id="using-v"><strong>Using -v (--volume)</strong></span>
 
 ```bash
 $ docker run -v data-volume:/var/opt/project(:ro) TEST #Named VOLUME
@@ -324,7 +324,7 @@ $ docker run -v ./src/data:/var/opt/project(:ro) TEST #BIND MOUNT
 
 The option `(:ro)` is optional specifying that the data is read-only by the container 
 
-**Using –mount**
+<span id="using-mount"><strong>Using –mount</strong></span>
 
 ```bash
 $ docker run --mount \ 
@@ -535,7 +535,7 @@ WARNING: No swap limit support
 
 If not enabled , enable limiting resources following those [instructions](https://docs.docker.com/engine/install/troubleshoot/#kernel-cgroup-swap-limit-capabilities)
 
-**Limit Docker Container Memory Access**
+<span id="limit-memory"><strong>Limit Docker Container Memory Access</strong></span>
 
 There are several RAM limitations you can set for a Docker container. Some of them include:
 
@@ -557,7 +557,7 @@ $ docker run -it --memory="1g" --memory-reservation="750m" <image-id/name> #Set 
 
 `--memory-reservation="[memory_limit]"` : Limiting the memory usage of a container with **`--memory`** is essentially setting a hard limit that cannot be surpassed. Alternatively, you can set a soft limit (**`--memory-reservation`**) which warns when the container reaches the end of its assigned memory but doesn’t stop any of its services.
 
-**Limit Docker Container CPU Usage**
+<span id="limit-cpu"><strong>Limit Docker Container CPU Usage</strong></span>
 
 There are several ways to define how much CPU resources from the host machine you want to assign to containers.
 
