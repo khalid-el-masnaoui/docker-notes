@@ -6,9 +6,9 @@ Notes about docker , docker architecture and how it works and other docker conce
 
 # Table Of Contents
 
-- **[What is Docker](#docker-cli-whale)**
-- **[What are Docker Containers](#images-framed_picture)**
-- **[What are Docker Images](#containers-ship)**
+- **[What is Docker](#docker-whale)**
+- **[What are Docker Containers](#what aredocker-container-ship)**
+- **[What are Docker Images](#what-are-docker-images-framed_picture)**
 	- **[Docker image](#create-and-run-a-new-container-from-an-image)**
 	- **[Docker image repositories](#list--start-stop-and-other-docker-container-commands)**
 - **[Docker Core Architecture](#images-framed_picture)**
@@ -24,7 +24,7 @@ Notes about docker , docker architecture and how it works and other docker conce
 		- **[Docker volumes](#)**
 		- **[Docker networks](#)**
 
-## What is Docker
+## What is Docker :whale:
 
 Docker is a software framework for building, running, and managing containers on servers and the cloud. The term "docker" may refer to either the tools (the commands and a daemon) or to the `Dockerfile` file format.
 
@@ -32,7 +32,7 @@ It used to be that when you wanted to run a web application, you bought a server
 
 Times have changed, though, and instead of focusing on single servers, the Internet is built upon arrays of inter-dependent and redundant servers in a system commonly called "the cloud". Thanks to innovations like _Linux kernel namespaces and cgroups_, the concept of a server could be removed from the constraints of hardware and instead became, essentially, a piece of software. These software-based servers are called [containers](#what-are-docker-containers),  and they're a hybrid mix of the Linux OS they're running on plus a hyper-localized runtime environment (the contents of the container).
 
-## What are Docker Containers
+## What are Docker Containers :ship:
 
 Container technology can be thought of as three different categories:
 
@@ -50,7 +50,7 @@ Docker containers have their own file system, dependency structure, processes, a
 <img src="./images/docker_container_kernel.png"/>
 </p>
 
-## What are Docker Images
+## What are Docker Images :framed_picture:
 
 ##### Docker image
 
@@ -80,7 +80,7 @@ Users can also create new images from existing ones and use the `docker push` co
 <img src="./images/docker_container_images.jpg"/>
 </p>
 
-## Docker Core Architecture
+## Docker Core Architecture :european_castle:
 
 ##### Docker core architecture
 
