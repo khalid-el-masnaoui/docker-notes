@@ -23,6 +23,12 @@ _Containers_ often deliver both an application and configuration, meaning that y
 
 The greatest appeal of containers, though, is their ability to "die" gracefully and re-spawn when load balancing demands it. Whether a container's demise is caused by a crash or because it's simply no longer needed because server traffic is low, containers are "cheap" to start, and they're designed to seamlessly appear and disappear. Because containers are meant to be ephemeral and to spawn new instances as often as required, it's expected that monitoring and managing them is not done by a human in real time, but is instead automated.
 
+Docker containers have their own file system, dependency structure, processes, and network capabilities. The application has everything it requires inside the container and can run anywhere. Docker container technology uses the underlying host operating system kernel resources directly.
+
+<p align="center">
+<img src="./images/docker_container_kernel.png"/>
+</p>
+
 ## What are Docker Images
 
 ##### Docker image
