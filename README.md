@@ -20,17 +20,17 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
     - **[The Docker File System](#the-docker-file-system)**
     - **[Creating and managing a volume](#creating-and-managing-a-volume)**
     - **[Usage](#usage)**
-	- **[Starting a Container with a Volume](#starting-a-container-with-a-volume)**
+		- **[Starting a Container with a Volume](#starting-a-container-with-a-volume)**
 		- **[Using -v (--volume)](#using-v)**
 		- **[Using –mount](#using-mount)**
-    -  **[What and When to use a specific volume type](#what-and-when to_use_a_specific_volume_type)**
+    - **[What and When to use a specific volume type](#what_and_when_to_use_a_specific_volume_type)**
     - **[Share data volumes with --volumes-from](#share-data-volumes-with---volumes-from)**
 - **[Networking](#networking-earth_africa)**
 	- **[How it works](#how-it-works)**
 	- **[Network drivers](#network-drivers)**
 	- **[Creating and managing a network](#creating-and-managing-a-network)**
 	-  **[Usage](#usage-1)**
-		-  **[Connect a container to a network)](#connect-a-container-to-a-network)**
+		-  **[Connect a container to a network](#connect-a-container-to-a-network)**
 - **[Monitoring and Manage docker containers](#monitoring-and-manage-docker-containers-oncoming_police_car)**
 	- **[Introduction](#introduction)**
 	- **[Monitor docker containers](#monitor-docker-containers)**
