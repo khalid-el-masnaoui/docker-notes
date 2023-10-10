@@ -132,7 +132,7 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 - `-p 127.0.0.1:80:80`: Binds port `80` of the container to  port `80` on `127.0.0.1` of the host machine (only accessible  by the host machine)
 - `--expose 80` : Exposes port 80 of the container without publishing the port to the host system's interfaces<br>
 
-`--net` : Connect a container to a network [check-network-section](#networking-earh_africa) <br>
+`--net` : Connect a container to a network [check-network-section](#networking-earth_africa) <br>
 `--ip`:  Assign a static IP to containers  (you must specify subnet block for the network)<br>
 
 `image` :  The image from which the container will be created and run, a tag of the image can be specified `image:tag` . The image can be locally stored Docker images (locally built). If you use an image that is not on your system, the software pulls it from the online registry.<br>
