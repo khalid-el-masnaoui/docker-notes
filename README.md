@@ -324,12 +324,49 @@ Docker supports different types of networks via network drivers, each fit for ce
 There are several default network drivers available in Docker and some can be installed with the help of plugins, Command to see the list of containers in Docker mentioned below.
 
 1. **bridge:** The `bridge` network represents the `docker0` network present in all Docker installations. If you build a container without specifying the kind of driver, the container will only be created in the bridge network, which is the default network. 
+	-  We can see this bridge as part of a host’s network stack by using the `ip addr show` command:
+		```bash
+		$ ip addr show
 
-3. **host:** The `host` network adds a container on the host’s network stack. As far as the network is concerned, _there is no isolation between the host machine and the container_. Containers will not have any IP address they will be directly created in the system network which will remove isolation between the docker host and containers.  For instance, if you run a container that runs a web server on port 80 using host networking, the web server is available on port 80 of the host machine.
+		docker0   Link encap:Ethernet  HWaddr 02:42:47:bc:3a:eb
+		          inet addr:172.17.0.1  Bcast:0.0.0.0  Mask:255.255.0.0
+		          inet6 addr: fe80::42:47ff:febc:3aeb/64 Scope:Link
+		          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1
+		          RX packets:17 errors:0 dropped:0 overruns:0 frame:0
+		          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+		          collisions:0 txqueuelen:0
+		          RX bytes:1100 (1.1 KB)  TX bytes:648 (648.0 B)
+		```
+	- 
+1. **host:** The `host` network adds a container on the host’s network stack. As far as the network is concerned, _there is no isolation between the host machine and the container_. Containers will not have any IP address they will be directly created in the system network which will remove isolation between the docker host and containers.  For instance, if you run a container that runs a web server on port 80 using host networking, the web server is available on port 80 of the host machine.
 
-3. **none:** The `none` network adds a container to a container-specific network stack. That container lacks a network interface. IP addresses won’t be assigned to containers. These containers are not accessible to us from the outside or from any other container. 
+2. **none:** The `none` network adds a container to a container-specific network stack. That container lacks a network interface. IP addresses won’t be assigned to containers. These containers are not accessible to us from the outside or from any other container. 
 
-4. **overlay:**  The `overlay` network will enable the connection between multiple Docker daemons and make different Docker swarm services communicate with each other.
+3. **overlay:**  The `overlay` network will enable the connection between multiple Docker daemons and make different Docker swarm services communicate with each other.
 
-5. **ipvlan:** Users have complete control over both IPv4 and IPv6 addressing by using the IPvlan driver.
-7. **macvlan:**  The `macvlan` driver makes it possible to assign MAC addresses to a container.
+4. **ipvlan:** Users have complete control over both IPv4 and IPv6 addressing by using the IPvlan driver.
+5. **macvlan:**  The `macvlan` driver makes it possible to assign MAC addresses to a container.
+
+**Note** : When you install Docker, it creates **three networks** automatically: `bridge`, `none` and `host`.
+
+##### Creating and managing a network
+
+```bash
+$ docker network create NAME   #Create network NAME
+$ docker network ls            #Check networks list
+$ docker network inspect NAME  #Shows some information such as network ips, gateway, connected containers...
+$ docker network rm NAME       #Remove a network
+$ docker network prune NAME    #Remove all unused networks
+```
+
+**Options & Flags**
+
+`docker volume create NAME`: Creates a new network , if driver option is not set , will be defaulted to `bridge`
+- `-d`:  Specify  Driver to manage the Network
+- `--subnet`: Subnet in CIDR format that represents a network segment
+- `--gateway` : IPv4 or IPv6 Gateway for the master subnet
+-  You can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/network_create/#options) you can use with this command
+- Example : 
+```bash
+$ docker network create --subnet 10.7.0.0/16 --gateway 10.7.7.7 malidkha-network
+```
