@@ -132,7 +132,7 @@ docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMM
 - `-p 127.0.0.1:80:80`: Binds port `80` of the container to  port `80` on `127.0.0.1` of the host machine (only accessible  by the host machine)
 - `--expose 80` : Exposes port 80 of the container without publishing the port to the host system's interfaces<br>
 
-`--net` : Connect a container to a network [check-network-section](#Networking) <br>
+`--net` : Connect a container to a network [check-network-section](#networking-earh_africa) <br>
 `--ip`:  Assign a static IP to containers  (you must specify subnet block for the network)<br>
 
 `image` :  The image from which the container will be created and run, a tag of the image can be specified `image:tag` . The image can be locally stored Docker images (locally built). If you use an image that is not on your system, the software pulls it from the online registry.<br>
@@ -169,7 +169,7 @@ $ docker attach  [ID/NAME] #Attach to a running container and view its output
 
 `docker rm $(docker ps -aq)`: Remove all containers
 - `-f`: By default remove command , remove the container if it is already stopped , this flag forces the container to be removed even if it is running
-- `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#Volumes) 
+- `-v`: Remove anonymous volumes associated with the container  [check-volume-section](#volumes-card_file_box) 
 
 ##### Access & Run shell commands Inside the container
 ```bash
