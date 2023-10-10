@@ -48,4 +48,7 @@ Users can also create new images from existing ones and use the `docker push` co
 
 **Note** :Docker images can be created through [Dockerfiles](dockerfile.md)
 
-![](images/docker_container_images.jpg)
+
+<p align="center">
+<img src="./images/docker_container_images.jpg"/>
+</p>
