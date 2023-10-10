@@ -11,7 +11,7 @@ A cheat-sheets and quick but rich reference guide for docker CLI commands and so
 - **[Containers](#containers-ship)**
 	- **[Create and run a new container from an image](#create-and-run-a-new-container-from-an-image)**
 	- **[List , start, stop and other docker container commands](#list--start-stop-and-other-docker-container-commands)**
-	- **[Access & Run shell commands Inside the container](#access-&-run-shell-commands-inside-the-container)**
+	- **[Access & Run shell commands Inside the container](#access---run-shell-commands-inside-the-container)**
 - **[Docker Logs](#docker-logs-spiral_notepad)**
 	- **[Docker Logs Commands](#docker-logs-commands)**
 	- **[Docker Logs Location](#docker-logs-location)**
@@ -525,7 +525,7 @@ If you don’t limit Docker’s memory and CPU usage, Docker can use all the sys
 
 To limit a container resources , we can either specify that in the [docker-compose-file](#docker-compose.md)  or  using the `docker run` command,
 
-**Configure System to Enable Limiting Resources**
+<span id="manage-res-configs"><strong>Configure System to Enable Limiting Resources</strong></span>
 
 Many of these features require your kernel to support Linux capabilities. To check for support, you can use the `docker info` command. If a capability is disabled in your kernel, you may see a warning at the end of the output like the following:
 
