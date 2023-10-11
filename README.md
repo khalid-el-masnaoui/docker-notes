@@ -181,6 +181,8 @@ $ docker container exec -it [NAME] bash #Access the bash shell of the container
 $ docker container exec -it [NAME] touch hello.txt #Create hello.txt file inside the working directory of the container
 ```
 
+**Options & Flags** 
+
 - `-w [DIR]` :   Working directory inside the container
 - `-u [UserName/UID]` :Username or UID under which the command is executed
 - `-e KEY=VALUE` : Set environment variables
