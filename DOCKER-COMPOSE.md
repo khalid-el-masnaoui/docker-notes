@@ -148,7 +148,7 @@ $ docker-compose logs
 
 `docker-compose up`:
 - `--build`: Build images before starting containers.
-- `--detach`or `-d`: Detached mode: Run containers in the background
+- `--detach`or `-d`: Detached mode, run containers in the background
 - you find [here the complete list of options](https://docs.docker.com/engine/reference/commandline/compose_up/#options) for this command.
 
 ##### Access & Run shell commands Inside the services container
@@ -167,6 +167,6 @@ $ docker-compose exec -it [NAME] touch hello.txt #Create hello.txt file inside t
 - `-u [UserName/UID]` :Username or UID under which the command is executed
 - `-e KEY=VALUE` : Set environment variables
 
-**Note** :  The `docker-compose exec` command , operates on services names not container names , `[NAME]`in above commands is for the _service name_
+**Note** :  The `docker-compose exec` command , operates on services names not container names , `[NAME]` in above commands is for the _service name_
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/compose_exec/#options) you can use with _docker-compose exec_ command 
