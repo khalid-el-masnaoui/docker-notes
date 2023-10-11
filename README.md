@@ -549,6 +549,8 @@ $ docker top [NAME/ID] #Show running processes in a container
 $ docker events [NAME/ID] #Get real-time events from the  container server such as restarts , starts ....
 $ docker stats [NAME/ID] #Show Resource usage statisticsfor one or more containers (or all) such  CPU and memory usage 
 $ docker system df -v #Show docker disk usage
+$ docker port [NAME/ID] #Show mapped ports
+$ docker diff [NAME/ID] #Show modified files
 ```
 
 **Note** : You can find here [the complete list of the events](https://docs.docker.com/engine/reference/commandline/events/)
