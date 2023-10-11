@@ -86,7 +86,7 @@ services:
 volumes:
     db_data:
 networks:
-	malikdha-network:
+    malikdha-network:
 ```
 
 As you can see this file contains a basic PHP application including the MySQL database. Each of these services is treated as a separate container that can be swapped in and out when you need it.
