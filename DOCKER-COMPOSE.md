@@ -65,8 +65,8 @@ services:
        MYSQL_DATABASE: wordpress
        MYSQL_USER: wordpress
        MYSQL_PASSWORD: wordpress
-	 networks:
-	   - malikdha-network	 
+     networks:
+       - malikdha-network	 
     php:
         build:
             context: .
