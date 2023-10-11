@@ -11,7 +11,7 @@ Notes about _Dockerfile_, a complete Dockerfile instruction reference and some b
 	- **[Example](#example)**
 - **[Dockerfile Instructions Reference](#dockerfile-instructions-reference)**
 	- **[List of the instructions](#list-of-the-instructions)**
-- **[`.dockerignore` file](#docker-core-architecture-european_castle)**
+- **[`.dockerignore` file](#dockerignore-file)**
 	- **[What is a `.dockerignore` file?](#what-is-a-dockerignore-file)**
 	- **[Benefits of using a `.dockerignore` file](#benefits-of-using-a-dockerignore-file)**
 		- **[Cache invalidation](#cache-invalidation)**
