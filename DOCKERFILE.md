@@ -1,7 +1,7 @@
 
 ## Dockerfile Notes
 
-Notes about _Dockerfile_, a complete list of the instructions used and some best practices.
+Notes about _Dockerfile_, a complete Dockerfile instruction reference and some best practices.
 
 
 ## What is a Dockerfile
@@ -48,4 +48,71 @@ In the example above, each instruction creates one layer:
 
 Docker supports over 15 different Dockerfile instructions for adding content to your image and setting configuration parameters. We will discuss all of them.
 
-Docker runs instructions in a `Dockerfile` in order. A `Dockerfile` **must begin with a `FROM` instruction**.
+Docker runs instructions in a `Dockerfile` in order. A `Dockerfile` **must begin with a `FROM` instruction**. (`ARG` is the only instruction that may precede `FROM` in the `Dockerfile`.)
+
+##### List of the instruction
+
+```dockerfile 
+FROM nginx:latest
+```
+- We use `FROM` to specify the base image we want to start from. (base image and also alias for _multi-stage_ build)
+ - The `tag` values are optional. If you omit it, the builder assumes a `latest` tag by default. The builder returns an error if it cannot find the `tag` value.
+
+```dockerfile 
+MAINTAINER malidkha
+```
+- Set the Author field of the generated images.
+
+```dockerfile 
+LABEL name="malidkha"
+LABEL email="malidkha.elmasnaoui@gmail.com"
+LABEL description="This is a Dockerfile reference"
+```
+-  Labels are key-value pairs and simply adds custom metadata to your Docker Images (such as version , release-date ..)
+
+```dockerfile 
+#shell form
+RUN apt-get update -y && apt-get install -y procps
+RUN chown -R malikdha:malikdha /var/log/nginx && \
+    chown -R malikdha:malikdha /etc/nginx
+
+#exec form
+RUN ["apt-get", "update", "-y"]
+```
+-  `RUN` is used to run commands during the image build process. (installing packages using apt , npm , composer ..)
+- **_Shell form_** : `RUN COMMAND` (by default is `/bin/sh -c`)
+- **Exec form**  : `RUN ["<executable>", "<param1>", "<param2>"]`
+- Change shell In which to run the command : `RUN ["/bin/bash", "-c", "echo hello from bash"]`
+
+```dockerfile 
+#shell form
+CMD nginx -g daemon off
+
+#exec form
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+```
+-  `CMD`:  Executes a command within a running container
+- **_Shell form_** : `CMD <command> <param1> <param2` (by default is `/bin/sh -c`)
+- **Exec form**  : `CMD ["executable", "param1", "param2"]`
+- Change shell In which to execute the command : `CMD ["/bin/bash", "-c", "echo hello from bash"]`
+- `CMD` Runs when the containers starts , only one can be executed, the _last one_
+- We can override the `CMD` instruction using the `docker run` command. If we specify a `CMD` in our Dockerfile and one on the `docker run` command line, then the command line will _override_ the Dockerfile ’s `CMD` instruction.
+
+
+```dockerfile 
+#shell form
+ENTRYPOINT nginx -g daemon off
+
+#exec form
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
+```
+-  `ENTRYPOINT`:  Specifies the commands that will execute when the Docker container starts. If you don’t specify any `ENTRYPOINT`, it defaults to `/bin/sh -c`
+- **_Shell form_** : `ENTRYPOINT <command> <param1> <param2` (by default is `/bin/sh -c`)
+- **Exec form**  : `ENTRYPOINT ["executable", "param1", "param2"]`
+- Change shell In which to execute the command : `ENTRYPOINT ["/bin/bash", "-c", "echo hello from bash"]`
+- `ENTRYPOINT` Sets default parameters that cannot be overridden while executing Docker containers with CLI parameters(cli will be appended as argumenets).
+- `ENTRYPOINT` can be overridden during running docker using `--entrypoint COMMAND`flag white `docker run`command
+- We can use both `CMD` and `ENTRYPOINT` ---> `ENTRYPOINT` will be executed first followed by `CMD` as argument
+
+
+
