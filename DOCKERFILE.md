@@ -170,6 +170,38 @@ ADD /path/on/host/ /path/on/container/
 - A valid use case for `ADD` is when you want to extract a local tar file into a specific directory in your Docker image.
 - If you’re copying in local files to your Docker image, always use `COPY` because it’s more explicit.
 
+```dockerfile
+WORKDIR /var/www/html
+```
+
+- `WORKDIR`is Used to set the current working directory.
+- The `WORKDIR` instruction can be used multiple times in a `Dockerfile`. If a relative path is provided, it will be relative to the path of the previous `WORKDIR` instruction. For example:
+
+```dockerfile
+USER malidkha
+```
+
+- `USER`sets the user name or _UID_ to use when running the image and for any `RUN`, `CMD`, `ENTRYPOINT` and any instruction instructions that follow it in the `Dockerfile`.
+- The `WORKDIR` instruction can be used multiple times in a `Dockerfile`. If a relative path is provided, it will be relative to the path of the previous `WORKDIR` instruction. For example:
+- If the User does not exit on the container you may want to add the user first : `RUN groupadd -f malidkha && (id -u malidkha &> /dev/null || useradd -G malidkha malidkha -D)`
+
+
+```dockerfile
+VOLUME ["/var/log/nginx", "/var/log/ph"]
+VOLUME /var/log/nginx /var/log/php
+```
+
+- `VOLUME` creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers.
+
+
+```dockerfile
+ONBUILD RUN composer install --optimize-autoloader --no-dev
+```
+
+- `ONBUILD`executes after the current Dockerfile build completes. 
+- The `ONBUILD` instruction may not trigger `FROM`, `MAINTAINER`, or `ONBUILD` instructions.
+
+
 
 
 
