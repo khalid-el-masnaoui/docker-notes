@@ -12,13 +12,13 @@ Notes about _Dockerfile_, a complete Dockerfile instruction reference and some b
 - **[Dockerfile Instructions Reference](#dockerfile-instructions-reference)**
 	- **[List of the instructions](#list-of-the-instructions)**
 - **[`.dockerignore` file](#docker-core-architecture-european_castle)**
-	- **[What is a `.dockerignore` file?](#what-is-a-.dockerignore-file)**
-	- **[Benefits of using a `.dockerignore` file](#benefits-of-using-a-.dockerignore-file)**
+	- **[What is a `.dockerignore` file?](#what-is-a-dockerignore-file)**
+	- **[Benefits of using a `.dockerignore` file](#benefits-of-using-a-dockerignore-file)**
 		- **[Cache invalidation](#cache-invalidation)**
 		- **[Reduces the image size](#reduces-the-image-size)**
 		- **[Security Issues](#security-issues)**
-	- **[How Does`.dockerignorefile` works?](#how-does-.dockerignorefile-works)**
-		- **[Example of `.dockerignore` file](#example-of-.dockerignore-file)**
+	- **[How Does`.dockerignorefile` works?](#how-does-dockerignorefile-works)**
+		- **[Example of `.dockerignore` file](#example-of-dockerignore-file)**
 
 ## What is a Dockerfile?
 
