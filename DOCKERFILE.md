@@ -44,4 +44,8 @@ In the example above, each instruction creates one layer:
 **Note** : When you run an image and generate a container, you add a new _writable layer_, also called the container layer, on top of the underlying layers. All changes made to the running container, such as writing new files, modifying existing files, and deleting files, are written to this writable container layer (writable layer is not persistent,  [read about that here](README.md#volumes-card_file_box) ).
 
 
-## Dockerfile reference
+## Dockerfile Instructions Reference
+
+Docker supports over 15 different Dockerfile instructions for adding content to your image and setting configuration parameters. We will discuss all of them.
+
+Docker runs instructions in a `Dockerfile` in order. A `Dockerfile` **must begin with a `FROM` instruction**.
