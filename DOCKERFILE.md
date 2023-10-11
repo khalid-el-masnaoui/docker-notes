@@ -4,7 +4,23 @@
 Notes about _Dockerfile_, a complete Dockerfile instruction reference and some best practices.
 
 
-## What is a Dockerfile
+# Table Of Contents
+
+- **[What is a Dockerfile?](#what-is-a-dockerfile)**
+	- **[Introduction](#introduction)**
+	- **[Example](#example)**
+- **[Dockerfile Instructions Reference](#dockerfile-instructions-reference)**
+	- **[List of the instructions](#list-of-the-instructions)**
+- **[`.dockerignore` file](#docker-core-architecture-european_castle)**
+	- **[What is a `.dockerignore` file?](#what-is-a-.dockerignore-file)**
+	- **[Benefits of using a `.dockerignore` file](#benefits-of-using-a-.dockerignore-file)**
+		- **[Cache invalidation](#cache-invalidation)**
+		- **[Reduces the image size](#reduces-the-image-size)**
+		- **[Security Issues](#security-issues)**
+	- **[How Does`.dockerignorefile` works?](#how-does-.dockerignorefile-works)**
+		- **[Example of `.dockerignore` file](#example-of-.dockerignore-file)**
+
+## What is a Dockerfile?
 
 ###### Introduction
 
@@ -264,7 +280,7 @@ If a Docker image file contains sensitive information such as credentials, it be
 
 Don't forget to exclude the `.git` directory at this point. If you have committed sensitive information in the past but have not erased it, it can cause serious problems. Git history is not required to be included in Docker images, so be sure to include it in your `.dockerignore` file.
 
-##### How `.dockerignorefile` works
+##### How does `.dockerignorefile` works?
 
 Before sending the Docker build context (Dockerfile, files you want to send inside the Docker image, and other things needed when building the Docker image) to the Docker daemon, in the root directory of the build context look for a file named `.dockerignore` in the root directory of the build context. If this file exists, the CLI will exclude any files or directories from the context that match the pattern written in the file. Therefore, the files and directories described in the `.dockerignore` file will not be included in the final built Docker image.
 

@@ -6,7 +6,7 @@ Notes about docker , docker architecture,  how docker works and other docker con
 
 # Table Of Contents
 
-- **[What is Docker](#what-is-docker-whale)**
+- **[What is Docker?](#what-is-docker-whale)**
 - **[What are Docker Containers](#what-are-docker-containers-ship)**
 - **[What are Docker Images](#what-are-docker-images-framed_picture)**
 	- **[Docker image](#docker-image)**
@@ -24,7 +24,7 @@ Notes about docker , docker architecture,  how docker works and other docker con
 		- **[Docker volumes](#docker-volumes)**
 		- **[Docker networks](#docker-networks)**
 
-## What is Docker :whale:
+## What is Docker? :whale:
 
 Docker is a software framework for building, running, and managing containers on servers and the cloud. The term "docker" may refer to either the tools (the commands and a daemon) or to the `Dockerfile` file format.
 
