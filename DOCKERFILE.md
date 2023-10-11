@@ -112,7 +112,64 @@ ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
 - Change shell In which to execute the command : `ENTRYPOINT ["/bin/bash", "-c", "echo hello from bash"]`
 - `ENTRYPOINT` Sets default parameters that cannot be overridden while executing Docker containers with CLI parameters(cli will be appended as argumenets).
 - `ENTRYPOINT` can be overridden during running docker using `--entrypoint COMMAND`flag white `docker run`command
+
+```dockerfile     
+ENTRYPOINT ["/usr/sbin/nginx"]
+CMD ["-g", "daemon off;"]
+```
+
 - We can use both `CMD` and `ENTRYPOINT` ---> `ENTRYPOINT` will be executed first followed by `CMD` as argument
+
+```dockerfile
+SHELL ["executable", "parameters"]
+
+#change default shell
+SHELL ["/bin/bash", "-c"]
+```
+
+- `SHELL` instruction allows the default shell used for the shell form of commands to be overridden. The default shell on Linux is `["/bin/sh", "-c"]`.
+- The `SHELL` instruction can appear multiple times. Each SHELL instruction overrides all previous SHELL instructions, and affects all subsequent instructions.
+- All instructions that use a shell , or that come after `SHELL`instruction, will use the new shell.
+
+```dockerfile
+EXPOSE 80/tcp
+```
+
+- `EXPOSE`is Used to tell Docker that the container listens on the specified network ports at runtime.Default is _TCP_ if the protocol is not specified.
+- This instruction won't open any port, as we can't open a port on a Docker Image, it is just to let docker know that the container will listen to the specified port at runtime
+
+```dockerfile
+#ARG INstruction
+ARG NAME=malikdha
+ARG NAME2
+
+#ENV Insruction
+ENV NAME malidkha
+ENV NAME2=malidkha
+```
+
+- `ARG` Defines build-time variables using key-value pairs. However, these ARG variables will not be accessible when the container is running.
+-  The `ARG` instruction defines a variable that users can pass at build-time to the builder with the `docker build`command using the `--build-arg <varname>=<value>` flag
+
+- `ENV` Sets environment variables within the image, making them accessible both during the build process and while the container is running.
+- This instruction won't open any port, as we can't open a port on a Docker Image, it is just to let docker know that the container will listen to the specified port at runtime
+
+
+```dockerfile
+#COPY Instruction
+COPY /path/on/host/ /path/on/container/
+
+#ADD Instruction
+ADD /path/on/host/ /path/on/container/
+```
+
+- `COPY`is used to copy a file or folder from the host system into the docker image.
+- We can copy the file or folder , while setting its ownership on the image using `COPY --chown=<user>:<group>`
+- `ADD` is an _advanced form of `COPY`_, Copies new files, directories, or remote file URLs from  the host filesystem  into the docker image.
+- `ADD` also supports 2 additional sources. First, you can use a _URL_ instead of a local file / directory. Secondly, you can extract a _tar file_ from the source directly into the destination.
+- A valid use case for `ADD` is when you want to extract a local tar file into a specific directory in your Docker image.
+- If you’re copying in local files to your Docker image, always use `COPY` because it’s more explicit.
+
 
 
 
