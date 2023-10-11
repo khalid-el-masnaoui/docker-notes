@@ -92,3 +92,62 @@ networks:
 As you can see this file contains a basic PHP application including the MySQL database. Each of these services is treated as a separate container that can be swapped in and out when you need it.
 
 The db service is built from an image being pulled from DockerHub , while the php service is built from a custom dockerfile 
+
+## Docker Compose commands
+
+##### Basic commands 
+
+We will list and discuss the main and most commonly used `docker-compose`commands.
+
+```bash
+# command builds or rebuild images in the docker-compose.yml file.
+$ docker-compose build
+
+# This is similar to the docker run command. It will create containers from images built for the services mentioned in the compose file.
+$ docker-compose run
+
+# This command does the work of the docker-compose build and docker-compose run commands. It builds the images if they are not located locally and starts the containers. If images are already built, it will fork the container directly.
+# Builds, (re)creates, starts, and attaches to containers for a service.
+$ docker-compose up
+
+# Stops containers and removes containers, networks, volumes, and images created by up.
+$ docker-compose down
+
+# Forces running containers to stop by sending a `SIGKILL` signal
+$ docker-compose kill 
+
+# Starts existing containers for a service.
+$ docker-compose start
+
+# Restarts all stopped and running services, or the specified services only.
+$ docker-compose restart
+
+# Stops running containers without removing them.
+$ docker-compose stop
+
+# Pauses running containers of a service.
+$ docker-compose pause
+
+# Unpauses paused containers of a service.
+$ docker-compose unpause
+
+# Removes stopped service containers.
+$ docker-compose rm
+
+# List images used by the created containers
+$ docker-compose images 
+
+# Lists containers.
+$ docker-compose ps
+
+
+# Displays log output from services.
+$ docker-compose logs
+```
+
+**Options & Flags** 
+
+`docker-compose up`:
+- `--build`: Build images before starting containers.
+- `--detach`or `-d`: Detached mode: Run containers in the background
+- you find [here the complete list of options](https://docs.docker.com/engine/reference/commandline/compose_up/#options) for this command.
