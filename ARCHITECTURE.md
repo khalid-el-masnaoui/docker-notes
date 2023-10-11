@@ -134,7 +134,7 @@ The docker client is the major way that provides communication between many dock
 
 Docker Client uses Command Line Interface (CLI) to run many commands , mainly : 
 
-- `docker build` : building images from [Dockerfiles](#DOCKERFILE.md)
+- `docker build` : building images from [Dockerfiles](DOCKERFILE.md)
 - `docker pull` :  Pulling images from the Docker image repository (The docker registry)
 - `docker run` : Starting a container
 
