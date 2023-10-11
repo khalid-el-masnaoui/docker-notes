@@ -249,6 +249,105 @@ HEALTHCHECK NONE
 
 
 
+
+## Multi-stage build
+
+##### What is Multi-stage build?
+
+_Multi-stage builds_ allow us to create a Dockerfile that defines multiple stages for building an image. Each stage can have its own set of instructions and build context, which means that the resulting image can be optimized for size and performance. In a multi-stage build, each stage produces an intermediate image that is used as the build context for the next stage. The final stage produces the image that will be used to run the application.
+
+The key advantage of using multi-stage builds is that it allows developers to reduce the size of the final image. By breaking down the build process into smaller stages, it becomes easier to remove unnecessary files and dependencies that are not needed in the final image. This can significantly reduce the size of the image, which can lead to faster deployment times and lower storage costs.
+
+In addition to reducing image size, multi-stage builds can also improve build performance. By breaking down the build process into smaller stages, Docker can cache the intermediate images and reuse them if the source code or dependencies haven't changed. This can lead to faster builds and shorter development cycles. [Read about docker best practices here](BEST-PRACTISES..md)
+
+##### Use multi-stage builds
+
+###### How does it work?
+With multi-stage builds, you use multiple `FROM` statements in your Dockerfile. Each `FROM` instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
+
+The following Dockerfile has two separate stages: one for building a binary, and another where we copy the binary into.
+
+```dockerfile
+# Build executable stage
+FROM golang
+ADD . /app
+WORKDIR /app
+RUN go build
+ENTRYPOINT /app/app
+
+# Build final image
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=0 /app/app .
+CMD ["./app”]
+```
+
+The end result is a tiny production image with nothing but the binary inside. None of the build tools required to build the application are included in the resulting image.
+
+How does it work? The second `FROM` instruction starts a new build stage with the `alpine` image as its base. The `COPY --from=0` line copies just the built artifact from the previous stage into this new stage. The Go SDK and any intermediate artifacts are left behind, and not saved in the final image.
+
+###### Naming the build stages
+
+By default, the stages aren't named, and you refer to them by their integer number, starting with `0` for the first `FROM` instruction. However, you can name your stages, by adding an `AS <NAME>` to the `FROM` instruction.
+
+Let's take a look at the previous example with the named build stages
+
+```dockerfile
+# Build executable stage
+FROM golang AS build
+ADD . /app
+WORKDIR /app
+RUN go build
+ENTRYPOINT /app/app
+
+# Build final image
+
+FROM alpine:latest as final
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=build /app/app .
+CMD ["./app”]
+```
+
+###### Stop at a specific build stage
+
+When you build your image, you don't necessarily need to build the entire Dockerfile including every stage. You can specify a target build stage. The following command assumes you are using the previous `Dockerfile` but stops at the stage named `build`:
+
+```console
+$ docker build --target build -t TEST .
+```
+
+A few scenarios where this might be useful are:
+
+- Debugging a specific build stage
+- Using a `debug` stage with all debugging symbols or tools enabled, and a lean `production` stage
+- Using a `testing` stage in which your app gets populated with test data, but building for production using a different stage which uses real data
+
+###### Use an external image as a stage
+
+When using multi-stage builds, you aren't limited to copying from stages you created earlier in your Dockerfile. You can use the `COPY --from` instruction to copy from a separate image, either using the local image name, a tag available locally or on a Docker registry, or a tag ID. The Docker client pulls the image if necessary and copies the artifact from there. The syntax is:
+
+```dockerfile
+COPY --from=nginx:latest /etc/nginx/nginx.conf /nginx.conf
+```
+
+###### Use a previous stage as a new stage
+
+You can pick up where a previous stage left off by referring to it when using the `FROM` directive. For example:
+
+```dockerfile
+FROM ubuntu AS base
+RUN echo "base"
+
+FROM base AS stage1
+RUN echo "stage1"
+
+FROM base AS stage2
+RUN echo "stage2"
+```
+
 ## `.dockerignore` file
 
 ##### What is a `.dockerignore` file?
