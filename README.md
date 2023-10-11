@@ -50,7 +50,7 @@ $ docker info #Display system-wide information
 ## Images :framed_picture:
 Images are read-only templates containing instructions for creating a container. A Docker image creates containers to run on the Docker platform.
 Think of an image like a blueprint or snapshot of what will be in a container when it runs.
-[discover-docker-images-and-containers-concepts-here](docker.readme)
+[discover-docker-images-and-containers-concepts-here](ARCHITECTURE.md)
 ##### Download an image from a registry (Such as Docker Hub)
 ```bash
 $ docker pull image
@@ -68,7 +68,7 @@ $ docker pull nginx:alpine #Download alpine nginx image
 ```
 ##### Build An image locally from a Dockerfile
 
-**_Dockerfiles_** are text files that list instructions for the Docker daemon to follow when building a container image.  [check-here-to-read-about-Dockerfiles](dockerfiles.md)
+**_Dockerfiles_** are text files that list instructions for the Docker daemon to follow when building a container image.  [check-here-to-read-about-Dockerfiles](DOCKERFILE.md)
 ```bash
 $ docker build . -t NAME -f DOCKERFILE --rm
 ```
@@ -80,7 +80,7 @@ $ docker build . -t NAME -f DOCKERFILE --rm
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/build/#options) you can use with the _docker build_ command
 
-**Note** : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](dockerfile.readme)
+**Note** : All the files in the local directory (`PATH`) get `tar'd` and sent to the Docker daemon.You can exclude files and directories by adding a `.dockerignore` file to the local directory, This helps to avoid unnecessarily sending large or sensitive files and directories to the daemon. [check-here-to-read-about-dockerignore](DOCKERFILE.md#dockerignore-file)
 
 **Example**
 ```bash
@@ -113,7 +113,7 @@ $ docker image inspect [ID/NAME]  #Display detailed information on one or more i
 
 ## Containers :ship:
 A container is an isolated place where an application runs without affecting the rest of the system and without the system impacting the application. 
-[discover-docker-images-and-containers-concepts-here](docker.readme)
+[discover-docker-images-and-containers-concepts-here](ARCHITECTURE.md)
 ##### Create and run a new container from an image
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
@@ -307,7 +307,7 @@ $ docker volume prune NAME    #Remove all unused volumes and free up space:
 
 ##### Usage
 
-To use a volume , we can either specify the volume in the [docker-compose-file](#docker-compose.md)  or  starting the container with a volume in the command.
+To use a volume , we can either specify the volume in the [docker-compose-file](#DOCKER-COMPOSE.md)  or  starting the container with a volume in the command.
 
 ###### Starting a Container with a Volume
 
@@ -478,7 +478,7 @@ $ docker network create --subnet 10.7.0.0/16 --gateway 10.7.7.7 malidkha-network
 
  <h5><span id="usage-network">Usage</span></h5>
 
-To use a network with a container , we can either specify the network in the [docker-compose-file](app://obsidian.md/index.html#docker-compose.md) or connect a container to a network.
+To use a network with a container , we can either specify the network in the [docker-compose-file](#DOCKER-COMPOSE.md) or connect a container to a network.
 
 ###### Connect a container to a network
 
