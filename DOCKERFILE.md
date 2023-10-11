@@ -50,7 +50,7 @@ Docker supports over 15 different Dockerfile instructions for adding content to 
 
 Docker runs instructions in a `Dockerfile` in order. A `Dockerfile` **must begin with a `FROM` instruction**. (`ARG` is the only instruction that may precede `FROM` in the `Dockerfile`.)
 
-##### List of the instruction
+##### List of the instructions
 
 ```dockerfile 
 FROM nginx:latest
@@ -233,3 +233,55 @@ HEALTHCHECK NONE
 
 
 
+## `.dockerignore` file
+
+##### What is a `.dockerignore` file?
+
+A `.dockerignore` is a configuration file that describes files and directories that you want to exclude when building a Docker image.
+
+Usually, you put the Dockerfile in the root directory of your project, but there may be many files in the root directory that are not related to the Docker image or that you do not want to include. `.dockerignore` is used to specify such unwanted files and not include them in the Docker image.
+
+##### Benefits of using a `.dockerignore` file
+
+The `.dockerignore` file is helpful to avoid inadvertently sending files or directories that are large or contain sensitive files to the daemon or avoid adding them to the image using the `ADD` or `COPY` commands. Those are some benefits of using such file : 
+
+###### Cache invalidation
+
+If you have frequently updated files (git history, test results, etc.) in your working directory, the cache will be regenerated every time you run Docker build. Therefore, if you include the directory with such files in the context, each build will take a lot of time. Consequently, you can prevent the cache from generating at build time by specifying `.dockerignore`.
+
+###### Reduces the image size
+
+By specifying files not to be included in the context in `.dockerignore`, the size of the image can be reduced. Reducing the size of the Docker image has the following advantages These benefits are important because the more instances of a service you have, such as microservices, the more opportunities you have to exchange Docker images.
+
+- Faster speed when doing `Docker pull/push`.
+- Faster speed when building Docker images.
+
+**Examples**: it is recommended to add directories such as `node_modules`, `vendor`... to `.dockerignore` because of their large file size.
+
+###### Security Issues
+
+If a Docker image file contains sensitive information such as credentials, it becomes a security issue. For example, uploading a Docker image containing files with credential information such as `.aws` or `.env` to a Docker repository such as the public DockerHub will cause those credential information to be compromised.
+
+Don't forget to exclude the `.git` directory at this point. If you have committed sensitive information in the past but have not erased it, it can cause serious problems. Git history is not required to be included in Docker images, so be sure to include it in your `.dockerignore` file.
+
+##### How `.dockerignorefile` works
+
+Before sending the Docker build context (Dockerfile, files you want to send inside the Docker image, and other things needed when building the Docker image) to the Docker daemon, in the root directory of the build context look for a file named `.dockerignore` in the root directory of the build context. If this file exists, the CLI will exclude any files or directories from the context that match the pattern written in the file. Therefore, the files and directories described in the `.dockerignore` file will not be included in the final built Docker image.
+
+###### Example of `.dockerignore` file
+
+```bash
+**/node_modules/
+npm-debug.log
+.env
+.aws
+.editorconfig
+.git
+.gitignore
+LICENSE
+README.md
+src/vendor
+**/*.swp
+Dockerfile
+docker-compose*
+```
