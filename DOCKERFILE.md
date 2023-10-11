@@ -11,6 +11,14 @@ Notes about _Dockerfile_, a complete Dockerfile instruction reference and some b
 	- **[Example](#example)**
 - **[Dockerfile Instructions Reference](#dockerfile-instructions-reference)**
 	- **[List of the instructions](#list-of-the-instructions)**
+- **[Multi-stage build](#multi-stage-build)**
+	- **[What is Multi-stage build?](#what-is-multi-stage-build)**
+	- **[Use multi-stage builds](#use-multi-stage-builds)**
+		- **[How does it work?](#how-does-it-work)**
+		- **[Naming the build stages](#naming-the-build-stages)**
+		- **[Stop at a specific build stage](#stop-at-a-specific-build-stage)**
+		- **[Use an external image as a stage](#use-an-external-image-as-a-stage)**
+		- **[Use a previous stage as a new stage](#use-a-previous-stage-as-a-new-stage)**
 - **[`.dockerignore` file](#dockerignore-file)**
 	- **[What is a `.dockerignore` file?](#what-is-a-dockerignore-file)**
 	- **[Benefits of using a `.dockerignore` file](#benefits-of-using-a-dockerignore-file)**
