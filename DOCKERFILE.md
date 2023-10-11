@@ -192,6 +192,7 @@ VOLUME /var/log/nginx /var/log/php
 ```
 
 - `VOLUME` creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers.
+-  **Note** : By design, the `VOLUME` directive in the Dockerfile only defines that a volume should be created for a specific path in the image (/container when running).The name of the volume should never be dictated by an image, because that's something that should be defined at runtime;
 
 ```dockerfile
 ONBUILD RUN composer install --optimize-autoloader --no-dev
