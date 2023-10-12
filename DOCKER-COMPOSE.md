@@ -196,3 +196,21 @@ $ docker-compose exec -it [NAME] touch hello.txt #Create hello.txt file inside t
 **Note** :  The `docker-compose exec` command , operates on services names not container names , `[NAME]` in above commands is for the _service name_
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/compose_exec/#options) you can use with _docker-compose exec_ command 
+
+## Docker-compose file reference
+
+##### Building
+
+```yml
+web:
+  # build from Dockerfile
+  build: .
+  # build from custom Dockerfile
+  build:
+    context: ./dir
+    dockerfile: Dockerfile.dev
+  # build from image
+  image: ubuntu
+  image: ubuntu:22.04
+  image: a4bc65fd
+```
