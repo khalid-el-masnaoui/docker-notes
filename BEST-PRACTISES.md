@@ -70,3 +70,29 @@ Once you’ve tightened the security around your Docker daemon installation, it�
 Only select trusted base images for the `FROM` instructions in your [Dockerfiles](#DOCKERFILE.md). You can easily find these images by filtering using the “Docker Official Image” and “Verified Publisher” options [on Docker Hub](https://hub.docker.com/search?q=&image_filter=official%2Cstore). An image that’s published by an unknown author or which has few downloads might not contain the content you expect.
 
 It’s also advisable to use minimal images (such as [Alpine-based variants](https://hub.docker.com/_/alpine)) where possible. These will have smaller download sizes and should contain fewer OS packages, which reduces your attack surface.
+
+###### Regularly rebuild your images
+
+Regularly rebuild your images from your Dockerfiles to ensure they include updated OS packages and dependencies. Built images are immutable, so package bug fixes and security patches released after your build won’t reach your running containers.
+
+Periodically rebuilding your images and restarting your containers is the best way to prevent stale dependencies being used in production. You can automate the container replacement process by using a tool such as [Watchtower](https://containrrr.dev/watchtower).
+
+###### Use image vulnerability scanners
+
+Scanning your built images for vulnerabilities is one of the most effective ways to inform yourself of problems. Scan tools are capable of identifying which packages you’re using, whether they contain any vulnerabilities, and how you can address the problem by upgrading or removing the package.
+
+You can perform a scan by running the [docker scout](https://docs.docker.com/scout) command (previously docker scan) or an external tool such as [Anchore](https://anchore.com/) or [Trivy](https://github.com/aquasecurity/trivy). Scanning each image you build will reveal issues before the image is used by containers running in production. It’s a good idea to include these scans as jobs in your CI pipeline.
+
+###### Use Docker content trust to verify image authenticity
+
+Before starting a container, you need to be sure that the image you’re using is authentic. An attacker could have uploaded a malicious replacement to your registry or intercepted the download to your host.
+
+Docker [Content Trust](https://docs.docker.com/engine/security/trust) is a mechanism for signing and verifying images. Image creators can sign their images to prove that they authored them; consumers who pull images can then verify the trust by comparing the image’s public signature.
+
+Docker [can be configured](https://docs.docker.com/engine/security/trust/#client-enforcement-with-docker-content-trust) to prevent the use of unsigned or unverifiable images. This provides a safeguard against potentially tampered content.
+
+###### Lint your Dockerfiles to detect unsafe misconfigurations
+
+Linting your Dockerfiles before you build them is an easy way to spot common mistakes  that could pose a security risk. Linters such as [Hadolint](https://github.com/hadolint/hadolint) check your Dockerfile instructions and flag any issues that contravene best practices.
+
+Fixing detected problems before you build will help ensure your images are secure and reliable. This is another process that’s worth incorporating into your CI pipelines.
