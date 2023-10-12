@@ -166,8 +166,15 @@ $ docker-compose images
 # Lists containers.
 $ docker-compose ps
 
-# Displays log output from services.
-$ docker-compose logs
+# List running compose projects
+$ docker compose ls
+
+# Copy files/folders between a service container and the local filesystem
+$ docker compose cp
+# copy from host to servoce
+$ docker-compose cp  ~/. /var/www/html/app
+#copy from service to host
+$ docker-compose cp  web:/var/www/html/app ~/.
 ```
 
 **Options & Flags** 
@@ -196,6 +203,22 @@ $ docker-compose exec -it [NAME] touch hello.txt #Create hello.txt file inside t
 **Note** :  The `docker-compose exec` command , operates on services names not container names , `[NAME]` in above commands is for the _service name_
 
 you can find here [the complete list of options](https://docs.docker.com/engine/reference/commandline/compose_exec/#options) you can use with _docker-compose exec_ command 
+
+##### Monitor and manage docker compose
+
+```bash
+# Displays log output from services.
+$ docker-compose logs
+
+# Receive real time events from containers services.
+$ docker-compose events
+
+# Display the running processes
+$ docker-compose top
+```
+
+
+You can check the complete list of `docker-compose`commands [here](https://docs.docker.com/compose/),
 
 ## Docker-compose file reference
 
