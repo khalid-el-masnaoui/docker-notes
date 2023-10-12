@@ -269,3 +269,24 @@ env_file: [.env, .development.env]
 **Note** : In case of _Passing an environment variable:_ , Here the value of _WORK_ENV_ is taken from the value from the same variable in the shell which runs the Compose file.
 
 **Note 2**  : **`env_file`** Adds environment variables to the container based on the file content. if not specified, by default docker will search for `.env`file in the root directory.
+
+  
+### Dependencies
+
+Dependencies in Docker are used to make sure that a specific service is available before the dependent container starts. This is often used if you have a service that can't be used without another one e.g. a Web application without its database.
+
+You may also define extra aliases for your containers that services can use to communicate with each other. Services in the same network can already reach one another. Links then only define other names under which the container can be reached.
+
+```yml
+# makes the `db` service available as the hostname `database`
+# (implies depends_on)
+links:
+  - db:database
+  - redis
+
+# make sure `db` is alive before starting
+depends_on:
+  - db
+```
+
+**Note**: `links` is deprecated , it is recommended to use user-defined networks (the services can use to communicate with each other). `docker-compose`already add a default network to all containers , which means `links`basically only used for  defining other names under which the container can be reached.
