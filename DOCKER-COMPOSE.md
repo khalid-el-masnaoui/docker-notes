@@ -103,7 +103,7 @@ The db service is built from an image being pulled from DockerHub , while the we
     
 - **`ports`:** This is used to map the container’s ports to the host machine.
 
-- **`env_file`:** Adds environment variables to the container based on the file content. if not specified, by default docker will search for `.env`file in the root directory.
+- **`env_file`:** Adds environment variables to the container based on the file content.
 
 - **`volumes`:** This is just like the `-v` option for mounting disks in Docker. In this example, we attach our PHP code files directory to the containers’ `/var/www/html` directory. This way, we won’t have to rebuild the images if changes are made. Also persisting the database data using _named volumes_  `db_data`, which is defined at the bottom of the docker-compose file.
 
@@ -244,3 +244,28 @@ command: [npm, run, start]
 entrypoint: /app/start.sh
 entrypoint: [php, -d, vendor/bin/phpunit]
 ```
+
+
+##### Environment variables
+
+Environment variables are used to bring configuration data into your applications.
+There are many different options of passing environment variables in our Compose file which we will explore below:
+
+```yml
+# environment vars
+environment:
+  WORK_ENV: development # Setting an environment variable
+environment:
+  - WORK_ENV=development # Setting an environment variable
+environment:
+  - WORK_ENV # Passing an environment variable
+
+
+# environment vars from file
+env_file: .env
+env_file: [.env, .development.env]
+```
+
+**Note** : In case of _Passing an environment variable:_ , Here the value of _WORK_ENV_ is taken from the value from the same variable in the shell which runs the Compose file.
+
+**Note 2**  : **`env_file`** Adds environment variables to the container based on the file content. if not specified, by default docker will search for `.env`file in the root directory.
