@@ -96,3 +96,7 @@ Docker [can be configured](https://docs.docker.com/engine/security/trust/#clien
 Linting your Dockerfiles before you build them is an easy way to spot common mistakes  that could pose a security risk. Linters such as [Hadolint](https://github.com/hadolint/hadolint) check your Dockerfile instructions and flag any issues that contravene best practices.
 
 Fixing detected problems before you build will help ensure your images are secure and reliable. This is another process that’s worth incorporating into your CI pipelines.
+
+##### Docker container security best practices
+
+The settings you apply to your Docker containers at runtime affect the security of your containerized applications, as well as your Docker host. Here are some techniques which help prevent containers from posing a threat.
