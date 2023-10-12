@@ -271,7 +271,7 @@ env_file: [.env, .development.env]
 **Note 2**  : **`env_file`** Adds environment variables to the container based on the file content. if not specified, by default docker will search for `.env`file in the root directory.
 
   
-### Dependencies
+##### Dependencies
 
 Dependencies in Docker are used to make sure that a specific service is available before the dependent container starts. This is often used if you have a service that can't be used without another one e.g. a Web application without its database.
 
@@ -291,13 +291,41 @@ depends_on:
 
 **Note**: `links` is deprecated , it is recommended to use user-defined networks (the services can use to communicate with each other). `docker-compose`already add a default network to all containers , which means `links`basically only used for  defining other names under which the container can be reached.
 
-### Labels
+##### Labels
 
 ```yml
 services:
   web:
     labels:
       malidkha.dev.description: "demo web app"
+```
+
+##### Volumes
+
+Volumes are Docker's preferred way of persisting data which is generated and used by Docker containers. They are completely managed by Docker and can be used to share data between containers and the Host system.
+
+They do not increase the size of the containers using it, and their context is independent of the lifecycle of the given container.
+
+```yaml
+volumes:
+  # Just specify a path and let the Engine create a volume(Anonymous volume)
+  - /var/lib/mysql
+  # bind mapping
+  - /opt/data:/var/lib/mysql.
+  # named volume
+  - datavolume:/var/lib/mysql
+
+  # explicilty (type is "bind" or "volume"...)
+  - type: bind 
+    source: src/ 
+    target: /var/www/html
+```
+
+**Note**: When using named volumes , the volume can either be already created, or explicitly declaring it in the bottom of the docker-compose file as:
+
+```yaml
+volumes: 
+	datavolume:
 ```
 
 ### Network
@@ -345,3 +373,4 @@ services:
 **Note** : One service may use more than one network
 
 **Note 2** : When using _pre-existing networks_, Docker never creates the default network and just uses the pre-existing network defined in the external tag. 
+
