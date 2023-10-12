@@ -230,3 +230,17 @@ ports:
 # expose ports to linked services (not to host)
 expose: ["3000"]
 ```
+
+##### Commands
+
+Commands are used to execute actions once the container is started and act as a replacement for the `CMD` action in your Dockerfile (if multiple commands are specified , only the last one takes effect).
+
+```yml
+# command to execute
+command: npm run start
+command: [npm, run, start]
+
+# override the entrypoint
+entrypoint: /app/start.sh
+entrypoint: [php, -d, vendor/bin/phpunit]
+```
