@@ -4,6 +4,20 @@
 Notes about _docker-compose_ file, a complete docker-compose file reference, the main commands  and some best practices.
 
 
+# Table Of Contents
+
+- **[What is a docker-compose file?](#what-is-a-docker-compose-file)**
+	- **[Introduction](#introduction)**
+	- **[Dockerfile vs Docker Compose](#dockerfile-vs-docker-compose)
+	- **[Example](#example)**
+- **[Docker Compose file structure](#docker-compose-file-structure)**
+- **[Docker Compose commands](#docker-compose-)**
+	- **[Basic commands](#basic-commands)
+	-  **[#Access & Run shell commands Inside the services container](#access-run-shell-commands-inside-the-services-container)**
+	- **[Monitor and manage docker compose](#monitor-and-manage-docker-compose)**
+- **[#Docker-compose file reference](##docker-compose-file-reference)**
+	- **[List of the instructions](#list-of-the-instructions)**
+	- 
 ## What is a docker-compose file?
 
 ###### Introduction
