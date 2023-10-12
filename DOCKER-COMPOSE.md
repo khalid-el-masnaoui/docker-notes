@@ -395,7 +395,25 @@ healthcheck:
   disable: true
 ```
 
-**Note** : `test`directive can also be `test: curl -f https://localhost || exit 1`
+**Note** : `test`directive can also be `test: curl -f https://localhost || exit 1`.
+
+##### Docker Restart Policy
+
+Restart policies are strategies we can use to restart Docker containers automatically and manage their lifecycles.
+
+Given that containers can fail unexpectedly, **Docker has safeguards to prevent services from running into a restart loop**. In case of a failure, restart policies don’t take effect unless the container runs successfully for at least 10 seconds.
+
+To use restart policies, Docker provides the following options:
+
+- `no`: Containers won’t restart automatically.
+- `on-failure[:max-retries]`: Restart the container if it exits with a non-zero exit code, and provide a maximum number of attempts for the Docker daemon to restart the container.
+- `always`: Always restart the container if it stops.
+- `unless-stopped`: Always restart the container unless it was stopped arbitrarily, or by the Docker daemon.
+
+```ymal
+db:
+  restart: on-failure
+```
 
 ##### Labels
 
