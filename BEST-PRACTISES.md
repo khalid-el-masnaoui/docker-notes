@@ -15,7 +15,7 @@ The Docker daemon is normally exposed via a Unix socket at `/var/run/docker.soc
 
 This should be avoided because it presents an additional attack vector. Accidentally exposing the TCP socket on your public network would allow anyone to send commands to the Docker API, without first requiring physical access to your host. Keep TCP disabled unless your use case demands remote access.
 
-**Do not expose _/var/run/docker.sock_ to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit.
+Do not expose `/var/run/docker.sock` to other containers. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit.
 
 ###### Use TLS if you must expose the daemon socket
 
@@ -59,3 +59,14 @@ Neglecting basic security measures will undermine the strongest container protec
 [User namespace remapping](https://docs.docker.com/engine/security/userns-remap) is a Docker feature that converts host UIDs to a different unprivileged range inside your containers. This helps to prevent privilege escalation attacks, where a process running in a container gains the same privileges as its UID has on your host.
 
 User namespace remapping assigns the container a range of UIDs from 0 to 65536 that translate to unprivileged host users in a much higher range. To enable the feature, you must start the Docker daemon with a `--userns-remap` flag that specifies how the remapping should occur.
+
+
+##### Docker image security
+
+Once you’ve tightened the security around your Docker daemon installation, it’s important to also review the images that you use. A compromised image can harbor security threats that form the basis of a successful attack.
+
+###### Use trusted/minimal base images
+
+Only select trusted base images for the `FROM` instructions in your [Dockerfiles](#DOCKERFILE.md). You can easily find these images by filtering using the “Docker Official Image” and “Verified Publisher” options [on Docker Hub](https://hub.docker.com/search?q=&image_filter=official%2Cstore). An image that’s published by an unknown author or which has few downloads might not contain the content you expect.
+
+It’s also advisable to use minimal images (such as [Alpine-based variants](https://hub.docker.com/_/alpine)) where possible. These will have smaller download sizes and should contain fewer OS packages, which reduces your attack surface.
