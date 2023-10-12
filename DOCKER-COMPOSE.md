@@ -67,7 +67,7 @@ services:
        MYSQL_PASSWORD: wordpress
      networks:
        - malikdha-network	 
-    php:
+    web:
         build:
             context: .
             dockerfile: docker/php.Dockerfile
@@ -91,7 +91,33 @@ networks:
 
 As you can see this file contains a basic PHP application including the MySQL database. Each of these services is treated as a separate container that can be swapped in and out when you need it.
 
-The db service is built from an image being pulled from DockerHub , while the php service is built from a custom dockerfile 
+The db service is built from an image being pulled from DockerHub , while the web(php) service is built from a custom dockerfile.
+
+- **`version ‘3.8’`:** This denotes that we are using version 3.8 of Docker Compose file (not docker-compose utility), and Docker will provide the appropriate features. At the time of writing this, version 3.8 is latest version of Compose file.
+    
+- **`services`:** This section defines all the different containers we will create. In our example, we have two services, web and database.
+    
+- **`web`:** This is the name of our PHP app service. Docker Compose will create containers with the name we provide.
+    
+- **`build`:** This specifies the location of our Dockerfile, and `context` is the build context that is sent to the Docker daemon.
+    
+- **`ports`:** This is used to map the container’s ports to the host machine.
+
+- **`env_file`:** Adds environment variables to the container based on the file content. if not specified, by default docker will search for `.env`file in the root directory.
+
+- **`volumes`:** This is just like the `-v` option for mounting disks in Docker. In this example, we attach our PHP code files directory to the containers’ `/var/www/html` directory. This way, we won’t have to rebuild the images if changes are made. Also persisting the database data using _named volumes_  `db_data`, which is defined at the bottom of the docker-compose file.
+
+- **`networks`:**  This is just like `--net`option for starting a container with a custom network, However the network should be defined at the bottom of the docker-compose file (will be created automatically)
+
+- **`depends_on`:** Express dependency between services.Dependencies in Docker are used to make sure that a specific service is available before the dependent container starts.
+
+- **`image`:** If we don’t have a Dockerfile and want to run a service using a pre-built image, we specify the image location using the `image` clause. Compose will fork a container from that image.
+    
+- **`environment`:** The clause allows us to set up an environment variable in the container. This is the same as the `-e` argument in Docker when running a container.
+
+- **`restart`:** Docker Compose includes the _restart_ property to restart containers automatically.
+
+
 
 ## Docker Compose commands
 
