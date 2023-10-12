@@ -291,6 +291,17 @@ depends_on:
 
 **Note**: `links` is deprecated , it is recommended to use user-defined networks (the services can use to communicate with each other). `docker-compose`already add a default network to all containers , which means `links`basically only used for  defining other names under which the container can be reached.
 
+**Note 2** : We can also link to containers started outside this `docker-compose.yml` or even outside of Compose, especially for containers that provide shared or common services.
+The externally-created containers **must be connected to at least one of the same networks** as the service that is linking to them.
+
+```yml
+services:
+  web:
+    external_links:
+      - redis_1
+      - project_db_2:db_2
+```
+
 ##### Labels
 
 ```yml
