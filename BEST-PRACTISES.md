@@ -1,4 +1,61 @@
 
 ## Docker Best Practices
 
-Notes about some best docker practices for improving Docker security, optimize the image size, writing cleaner and more maintainable Dockerfiles, handling volumes permissions and many more.
+Notes about some of the best docker practices for improving Docker security, optimize the image size, writing cleaner and more maintainable Dockerfiles, handling volumes permissions and many more.
+
+## Docker Security Best Practices
+
+##### Docker daemon security
+
+Docker’s architecture is daemon-based: the client CLI you interact with communicates with a separate background service to carry out actions such as building images and starting containers. It’s critical to protect the daemon because anyone with access to it can execute Docker commands on your host.
+
+######  Don't expose the Docker daemon socket
+
+The Docker daemon is normally exposed via a Unix socket at `/var/run/docker.sock`. It’s possible to optionally configure the daemon to listen on a _TCP socket_ too, which allows remote connections to the Docker host from another machine.
+
+This should be avoided because it presents an additional attack vector. Accidentally exposing the TCP socket on your public network would allow anyone to send commands to the Docker API, without first requiring physical access to your host. Keep TCP disabled unless your use case demands remote access.
+
+**Do not expose _/var/run/docker.sock_ to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit.
+
+###### Use TLS if you must expose the daemon socket
+
+When there’s no alternative to using TCP, it’s essential to [protect the socket with TLS](https://docs.docker.com/engine/security/protect-access). This will ensure access is only granted to clients that present the correct certificate key.
+
+TCP with TLS is still a potential risk because any client with the certificate can interact with Docker. It’s also possible to use an SSH-based connection to communicate with the Docker daemon, which allows you to reuse your existing SSH keys.
+
+
+###### Enable rootless mode where possible
+
+Docker defaults to running both the daemon and your containers as `root`. This means that vulnerabilities in the daemon or a container could allow attackers to breakout and run arbitrary commands on your host.
+
+[Rootless mode](https://docs.docker.com/engine/security/rootless) is an optional feature that allows you to start the Docker daemon without using root. It’s more complex to set up and has some [limitations](https://docs.docker.com/engine/security/rootless/#known-limitations), but it provides a useful extra layer of protection for security-sensitive production environments.
+
+###### Keep Docker updated
+
+One of the easiest ways to maintain Docker security is to stay updated with new releases. Docker regularly issues patches that fix newly found security problems. Running an old version makes it more likely that you’re missing protections for exploitable vulnerabilities.
+
+Regularly apply any updates offered by your OS package manager to ensure you’re protected. 
+
+###### Disable inter-container communication
+
+Docker normally allows arbitrary communication between the containers running on your host. Each new container is automatically added to the `docker0` bridge network, which allows it to discover and contact its peers.
+
+Keeping inter-container communication (ICC) enabled is risky because it could permit a malicious process to launch an attack against neighboring containers. You should increase your security by launching the Docker daemon with ICC disabled (using the `--icc=false` flag), then permit communications between specific containers by manually creating networks.
+
+###### Enable OS-level security protections (SELinux/Seccomp/AppArmor)
+
+Ensuring OS-level security systems are active helps defend against malicious activity originating inside containers and the Docker daemon. Docker supports policies for [SELinux](https://github.com/containers/container-selinux), [Seccomp](https://docs.docker.com/engine/security/seccomp), and [AppArmor](https://docs.docker.com/engine/security/apparmor); keeping them enabled ensures sane defaults are applied to your containers, including restrictions for [dangerous system calls](https://docs.docker.com/engine/security/seccomp/#significant-syscalls-blocked-by-the-default-profile).
+
+The default `seccomp` profile provides a sane default for running containers with seccomp and disables around 44 system calls out of 300+. It is moderately protective while providing wide application compatibility.
+
+###### Harden your host
+
+Docker security is only as good as the protection surrounding your host. You should fully harden your host environment by taking steps such as regularly updating your host’s OS and kernel, enabling firewalls and network isolation, and restricting direct host access to just the administrators who require it.
+
+Neglecting basic security measures will undermine the strongest container protections.
+
+###### Enable user namespace remapping
+
+[User namespace remapping](https://docs.docker.com/engine/security/userns-remap) is a Docker feature that converts host UIDs to a different unprivileged range inside your containers. This helps to prevent privilege escalation attacks, where a process running in a container gains the same privileges as its UID has on your host.
+
+User namespace remapping assigns the container a range of UIDs from 0 to 65536 that translate to unprivileged host users in a much higher range. To enable the feature, you must start the Docker daemon with a `--userns-remap` flag that specifies how the remapping should occur.
