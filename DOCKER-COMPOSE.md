@@ -299,3 +299,49 @@ services:
     labels:
       malidkha.dev.description: "demo web app"
 ```
+
+### Network
+
+By default Compose sets up a single network for each container. Each container is automatically joining the default network which makes them reachable by both other containers on the network, and discover-able by the host-name defined in the Compose file.
+
+```yml
+# creates a custom network called `frontend`
+networks:
+  malidkha-network:
+# You can also provide a custom name to your network (since version 3.5):
+networks:
+  webapp:
+    name: website
+    driver: website-driver
+
+# You can use pre-existing networks with Docker Compose using the external option.
+
+networks:
+  default:
+    external:
+      name: pre-existing-network
+
+  
+# Instead of defining your own networks you could change the settings of the default network by defining an entry with the name default under the "networks" keyword.
+networks:
+  default:
+    driver: custom-driver
+```
+
+Each container can specify what networks to connect to with the service level `networks` keyword, which takes a list of names referencing entries of  the top-level "networks" keyword.
+
+```yaml
+services:
+  web:
+    build: .
+    networks:
+      - malidkha-network
+  db:
+    image: mysql:8.0.34
+    networks:
+      - malidkha-network
+```
+
+**Note** : One service may use more than one network
+
+**Note 2** : When using _pre-existing networks_, Docker never creates the default network and just uses the pre-existing network defined in the external tag. 
