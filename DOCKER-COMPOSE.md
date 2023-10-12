@@ -328,7 +328,7 @@ volumes:
 
 ```yaml
 volumes: 
-	datavolume:
+  datavolume:
 ```
 
 ### Network
