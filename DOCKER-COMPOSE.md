@@ -290,3 +290,12 @@ depends_on:
 ```
 
 **Note**: `links` is deprecated , it is recommended to use user-defined networks (the services can use to communicate with each other). `docker-compose`already add a default network to all containers , which means `links`basically only used for  defining other names under which the container can be reached.
+
+### Labels
+
+```yml
+services:
+  web:
+    labels:
+      malidkha.dev.description: "demo web app"
+```
