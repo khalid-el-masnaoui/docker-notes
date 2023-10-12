@@ -9,16 +9,21 @@ Notes about _docker-compose_ file, a complete docker-compose file reference, the
 - **[What is a docker-compose file?](#what-is-a-docker-compose-file)**
 	- **[Introduction](#introduction)**
 	- **[Dockerfile vs Docker Compose](#dockerfile-vs-docker-compose)**
-	- **[Example](#example)**
 - **[Docker Compose file structure](#docker-compose-file-structure)**
-- **[Docker Compose commands](#docker-compose-)**
+- **[Docker Compose commands](#docker-compose-commands)**
 	- **[Basic commands](#basic-commands)**
 	-  **[Access & Run shell commands Inside the services container](#access--run-shell-commands-inside-the-services-container)**
 	- **[Monitor and manage docker compose](#monitor-and-manage-docker-compose)**
 - **[Docker-compose file reference](#docker-compose-file-reference)**
 	- **[Building](#building)**
-	- **[Building](#building)**
-	- **[Building](#building)**
+	- **[Ports](#ports)**
+	- **[Commands](#commands)**
+	- **[Environment variables](#environment-variables)**
+	- **[Dependencies](#dependencies)**
+	- **[Network](#network)**
+	- **[Healthcheck](#healthcheck)**
+	- **[Docker Restart Policy](#docker-restart-policy)**
+	- **[Labels](#labels)**
 
 
 ## What is a docker-compose file?
