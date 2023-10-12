@@ -266,7 +266,7 @@ _Multi-stage builds_ allow us to create a Dockerfile that defines multiple stag
 
 The key advantage of using multi-stage builds is that it allows developers to reduce the size of the final image. By breaking down the build process into smaller stages, it becomes easier to remove unnecessary files and dependencies that are not needed in the final image. This can significantly reduce the size of the image, which can lead to faster deployment times and lower storage costs.
 
-In addition to reducing image size, multi-stage builds can also improve build performance. By breaking down the build process into smaller stages, Docker can cache the intermediate images and reuse them if the source code or dependencies haven't changed. This can lead to faster builds and shorter development cycles. [Read about docker best practices here](BEST-PRACTISES..md)
+In addition to reducing image size, multi-stage builds can also improve build performance. By breaking down the build process into smaller stages, Docker can cache the intermediate images and reuse them if the source code or dependencies haven't changed. This can lead to faster builds and shorter development cycles. [Read about docker best practices here](BEST-PRACTISES.md)
 
 ##### Use multi-stage builds
 
