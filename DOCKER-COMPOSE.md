@@ -302,14 +302,6 @@ services:
       - project_db_2:db_2
 ```
 
-##### Labels
-
-```yml
-services:
-  web:
-    labels:
-      malidkha.dev.description: "demo web app"
-```
 
 ##### Volumes
 
@@ -384,4 +376,33 @@ services:
 **Note** : One service may use more than one network
 
 **Note 2** : When using _pre-existing networks_, Docker never creates the default network and just uses the pre-existing network defined in the external tag. 
+
+##### Healthcheck
+
+Configure a check that's run to determine whether or not containers for this service are "healthy". 
+the `HEALTHCHECK`inside docker-compose works the same in the dockerfile, [check here](#DOCKERFILE.md)
+
+```yaml
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+
+#To disable any default healthcheck set by the image, you can use `disable: true`. This is equivalent to specifying `test: ["NONE"]`.
+healthcheck:
+  disable: true
+```
+
+**Note** : `test`directive can also be `test: curl -f https://localhost || exit 1`
+
+##### Labels
+
+```yml
+services:
+  web:
+    labels:
+      malidkha.dev.description: "demo web app"
+```
 
