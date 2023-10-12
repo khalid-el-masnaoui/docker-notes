@@ -201,6 +201,8 @@ you can find here [the complete list of options](https://docs.docker.com/engine/
 
 ##### Building
 
+The base image of a container can be defined by either using a preexisting image that is available on _DockerHub_ (or locally) or by building images using a _Dockerfile_.
+
 ```yml
 web:
   # build from Dockerfile
@@ -213,4 +215,18 @@ web:
   image: ubuntu
   image: ubuntu:22.04
   image: a4bc65fd
+```
+
+**Note** : Take good care of the build context, as it affects  our build paths and `.dockerignore` files. One way i always use , is specifying `context: .` and put `.dockerignore` file in the root directory, that way your build context is always your root  directory.
+
+##### Ports
+
+`ports` is used to map the container’s ports to the host machine. `expose` instead is used to publish the ports to the linked services of the container and not to the host system.
+
+```yml
+ports:
+  - "3000"
+  - "8000:80"  # guest:host
+# expose ports to linked services (not to host)
+expose: ["3000"]
 ```
