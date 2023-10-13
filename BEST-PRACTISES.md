@@ -159,3 +159,11 @@ $ docker run –security-opt=no-new-privileges:true example-image:latest
 ```
 
 When this flag is used, calls to `setuid` and `setgid` will have no effect. This prevents the container from acquiring new privileges.
+
+##### Use read-only filesystem mode
+
+Few containerized applications need to write directly to their filesystem. Opting them into Docker’s read-only mode prevents filesystem modifications, except to designated volume mount locations. This will block an intruder from making malicious changes to the content within the container, such as by replacing binaries or configuration files.
+
+```bash
+$ docker run --read-only example-image:latest
+```
