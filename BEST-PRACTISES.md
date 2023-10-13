@@ -147,3 +147,15 @@ $ docker run --user=1000 example-image:latest
 ```
 
 Either of these methods ensure your container will execute as a specific non-root user. This minimizes the risk of container breakout attacks by preventing the containerized process from running commands as `root` on your host.
+
+##### Prevent containers from escalating privileges
+
+Containers can usually escalate their privileges by calling the `setuid` and `setgid` binaries. This is a security risk because the containerized process could use `setuid` to effectively become `root`.
+
+To prevent this, you should set the `no-new-privileges` security option when you start your containers:
+
+```bash
+$ docker run –security-opt=no-new-privileges:true example-image:latest
+```
+
+When this flag is used, calls to `setuid` and `setgid` will have no effect. This prevents the container from acquiring new privileges.
