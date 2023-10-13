@@ -136,3 +136,14 @@ To set a CPU allowance, supply the `--cpus` flag. You must specify the number 
 ```bash
 $ docker run --cpus=2 example-image:latest
 ```
+
+
+##### Ensure container processes run as a non-root user
+
+Containers default to running as `root` but this can be changed by either including a `USER` instruction in your Dockerfile or setting the `docker run` command’s `--user` flag:
+
+```bash
+$ docker run --user=1000 example-image:latest
+```
+
+Either of these methods ensure your container will execute as a specific non-root user. This minimizes the risk of container breakout attacks by preventing the containerized process from running commands as `root` on your host.
