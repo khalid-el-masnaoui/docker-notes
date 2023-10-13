@@ -110,3 +110,13 @@ Exposing container ports unnecessarily (using the `-p` or `--port` flag for�
 Using [privileged mode](https://docs.docker.com/engine/reference/commandline/run/#privileged) (`--privileged`) is a security risk that should be avoided unless you’re certain it’s required. Containers that run in privileged mode are granted _all_ available Linux capabilities and have some cgroups restrictions lifted. This allows them to achieve almost anything that the host machine can.
 
 Containerized apps very rarely require privileged mode. It’s typically only useful when you’re running an application that needs full access to your host or the ability to manage other Docker containers.
+
+##### Drop capabilities when you start containers
+
+Even the default set of [Linux capabilities](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) granted by Docker can be too permissive for production use. They include the ability to change file UIDs and GIDs, kill processes, and bypass file read, write, and execute permission checks.
+
+It’s good practice to drop capabilities that your container doesn’t need. The `docker run` command’s `--cap-drop` and `--cap-add` flags allow you to remove and grant them. The following example drops every capability, then adds back `CHOWN` to permit file ownership changes:
+
+```bash
+$ docker run --cap-drop=ALL --cap-add=CHOWN example-image:latest
+```
