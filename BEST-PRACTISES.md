@@ -104,3 +104,9 @@ The settings you apply to your Docker containers at runtime affect the security 
 ##### Don't expose unnecessary ports
 
 Exposing container ports unnecessarily (using the `-p` or `--port` flag for `docker run`) can increase your attack surface by allowing external processes to probe inside the container. Only ports which are actually needed by the containerized application (typically those listed as Dockerfile `EXPOSE` instructions) should be opened.
+
+##### Don't start containers in privileged mode
+
+Using [privileged mode](https://docs.docker.com/engine/reference/commandline/run/#privileged) (`--privileged`) is a security risk that should be avoided unless you’re certain it’s required. Containers that run in privileged mode are granted _all_ available Linux capabilities and have some cgroups restrictions lifted. This allows them to achieve almost anything that the host machine can.
+
+Containerized apps very rarely require privileged mode. It’s typically only useful when you’re running an application that needs full access to your host or the ability to manage other Docker containers.
