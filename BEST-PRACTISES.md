@@ -120,3 +120,19 @@ It’s good practice to drop capabilities that your container doesn’t need. Th
 ```bash
 $ docker run --cap-drop=ALL --cap-add=CHOWN example-image:latest
 ```
+
+##### Limit the resources access for containers
+
+Docker doesn’t automatically apply any resource constraints to your containers. Containerized processes are free to use unlimited CPU and memory, which could impact other applications on your host. Setting limits for these resources helps to defend against denial-of-service (DoS) attacks.
+
+Limit a container’s memory allowance by including the `-m` or `--memory` flag with your `docker run` commands:
+
+```bash
+$ docker run -m=128m example-image:latest
+```
+
+To set a CPU allowance, supply the `--cpus` flag. You must specify the number of CPU cores you want to make available:
+
+```bash
+$ docker run --cpus=2 example-image:latest
+```
