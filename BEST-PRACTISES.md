@@ -100,3 +100,7 @@ Fixing detected problems before you build will help ensure your images are secur
 ##### Docker container security best practices
 
 The settings you apply to your Docker containers at runtime affect the security of your containerized applications, as well as your Docker host. Here are some techniques which help prevent containers from posing a threat.
+
+##### Don't expose unnecessary ports
+
+Exposing container ports unnecessarily (using the `-p` or `--port` flag for `docker run`) can increase your attack surface by allowing external processes to probe inside the container. Only ports which are actually needed by the containerized application (typically those listed as Dockerfile `EXPOSE` instructions) should be opened.
