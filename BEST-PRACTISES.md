@@ -101,17 +101,17 @@ Fixing detected problems before you build will help ensure your images are secur
 
 The settings you apply to your Docker containers at runtime affect the security of your containerized applications, as well as your Docker host. Here are some techniques which help prevent containers from posing a threat.
 
-##### Don't expose unnecessary ports
+###### Don't expose unnecessary ports
 
 Exposing container ports unnecessarily (using the `-p` or `--port` flag for `docker run`) can increase your attack surface by allowing external processes to probe inside the container. Only ports which are actually needed by the containerized application (typically those listed as Dockerfile `EXPOSE` instructions) should be opened.
 
-##### Don't start containers in privileged mode
+###### Don't start containers in privileged mode
 
 Using [privileged mode](https://docs.docker.com/engine/reference/commandline/run/#privileged) (`--privileged`) is a security risk that should be avoided unless you’re certain it’s required. Containers that run in privileged mode are granted _all_ available Linux capabilities and have some cgroups restrictions lifted. This allows them to achieve almost anything that the host machine can.
 
 Containerized apps very rarely require privileged mode. It’s typically only useful when you’re running an application that needs full access to your host or the ability to manage other Docker containers.
 
-##### Drop capabilities when you start containers
+###### Drop capabilities when you start containers
 
 Even the default set of [Linux capabilities](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities) granted by Docker can be too permissive for production use. They include the ability to change file UIDs and GIDs, kill processes, and bypass file read, write, and execute permission checks.
 
@@ -121,7 +121,7 @@ It’s good practice to drop capabilities that your container doesn’t need. Th
 $ docker run --cap-drop=ALL --cap-add=CHOWN example-image:latest
 ```
 
-##### Limit the resources access for containers
+###### Limit the resources access for containers
 
 Docker doesn’t automatically apply any resource constraints to your containers. Containerized processes are free to use unlimited CPU and memory, which could impact other applications on your host. Setting limits for these resources helps to defend against denial-of-service (DoS) attacks.
 
@@ -138,7 +138,7 @@ $ docker run --cpus=2 example-image:latest
 ```
 
 
-##### Ensure container processes run as a non-root user
+###### Ensure container processes run as a non-root user
 
 Containers default to running as `root` but this can be changed by either including a `USER` instruction in your Dockerfile or setting the `docker run` command’s `--user` flag:
 
@@ -148,7 +148,7 @@ $ docker run --user=1000 example-image:latest
 
 Either of these methods ensure your container will execute as a specific non-root user. This minimizes the risk of container breakout attacks by preventing the containerized process from running commands as `root` on your host.
 
-##### Prevent containers from escalating privileges
+###### Prevent containers from escalating privileges
 
 Containers can usually escalate their privileges by calling the `setuid` and `setgid` binaries. This is a security risk because the containerized process could use `setuid` to effectively become `root`.
 
@@ -160,7 +160,7 @@ $ docker run –security-opt=no-new-privileges:true example-image:latest
 
 When this flag is used, calls to `setuid` and `setgid` will have no effect. This prevents the container from acquiring new privileges.
 
-##### Use read-only filesystem mode
+###### Use read-only filesystem mode
 
 Few containerized applications need to write directly to their filesystem. Opting them into Docker’s read-only mode prevents filesystem modifications, except to designated volume mount locations. This will block an intruder from making malicious changes to the content within the container, such as by replacing binaries or configuration files.
 
