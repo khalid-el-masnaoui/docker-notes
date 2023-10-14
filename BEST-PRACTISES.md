@@ -167,3 +167,6 @@ Few containerized applications need to write directly to their filesystem. Optin
 ```bash
 $ docker run --read-only example-image:latest
 ```
+
+
+## Dockerfile Best Practices
