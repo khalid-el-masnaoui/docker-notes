@@ -172,3 +172,5 @@ $ docker run --read-only example-image:latest
 ## Dockerfile Best Practices
 
 ## Docker volume permissions Best Practices
+
+## Other Docker Best Practices
