@@ -1,7 +1,7 @@
 # Docker Notes
 A cheat-sheets and quick but relatively-detailed reference guide for docker CLI commands and some of docker concepts
 
-This repository contained a complete _**set**_ of DOCKER NOTES organized as follow:
+This repository containes a complete _**set**_ of DOCKER NOTES organized as follow:
 
 - [Docker Architecture](ARCHITECTURE.md) 
 - [Docker CLI ](README.md) (_current file_)
