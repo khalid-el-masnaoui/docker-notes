@@ -188,10 +188,86 @@ Docker containers share the same kernel with the host (the server where Docker d
 
 ##### Solutions
 
+_Reminder_ : Most files are deployed to a container through:
+
+- (a) a `COPY` directive in dockerfile , (during the image build process)
+- (b) through a `docker cp` command, (usually after a docker create command that creates but doesn’t start yet the container)
+- (c) mounting of a host directory (e.g a bind mount defined in `docker run` command or in the `docker-compose.yml`),
+- (d) a entry script that is executed during the image build process.
+
+In cases (a) and (d), the onwer of the files in the container will be the user under which the container is running. In cases (b) and (c), the file permissions are “inhereted” from host’s filesystem.
+
+###### 1.Create a non-root user in the container and run the container under such user
+
+Some services (like Nginx, MySql or PHP-FPM...) create a user during their installation, so we don’t have to do it ourselves.
+
+```dockerfile
+#add user and group
+RUN groupadd -f www-data && \
+    (id -u www-data &> /dev/null || useradd -G www-data www-data -D)
 
 
 
+# run the container under such user
+USER www-data
+```
+
+###### 2.Remapping the UIDs/GIDs of the container's user to the UIDs/GIDs of the host's user
+
+```dockerfile
+#assign the created user same UID AND GUID OF the host for the mounted dir owner
+ARG UID
+ARG GID
+
+RUN usermod -u $UID www-data
+RUN groupmod -g $GID www-data
+```
+
+then you can assign the UID and GID during the build either by specifying
+`--build-arg="UID=$(id -u)" --build-arg="GID=$(id -g)"` in the `docker build` command or using `docker-compose.yml`as below: 
+
+```yml
+version: '3.8'
+# Services
+services:
+	#Nginx Service
+	nginx:
+		build:
+			context: .
+			dockerfile: docker/nginx.Dockerfile
+			args:
+				UID: ${XUID}
+				GID: ${XGID}
+```
+
+and then 
+
+```bash
+# To your ~/.bashrc file append these two lines:
+$ export XUID=$(id -u) 
+$ export XGID=$(id -g)
+
+#Then refresh the file (or open a new terminal):
+$ source ~/.bashrc # or '. ~/.bashrc'
 ## Other Docker Best Practices
+```
+
+###### 3.Adjusting the permission during the build
+
+_Examples_ : 
+```dockerfile
+# Copied files/directorties
+COPY --chown=www-data:www-data src/ /var/www/html/
+RUN chown -r app:app /var/www/html/ #(with above command no need to tun this)
+
+# PID directory
+RUN install -d -m 0755 -o www-data -g www-data /run/php-fpm
+RUN install -o www-data -g www-data /dev/null /var/run/nginx.pid
+
+# Logs
+RUN install -o mysql -g mysql -d /var/log/mysql && \
+    install -o mysql -g mysql /dev/null /var/log/mysql/error.log && \
+```
 
 ##### Layer sanity
 
