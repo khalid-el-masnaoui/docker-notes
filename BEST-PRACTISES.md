@@ -171,6 +171,57 @@ $ docker run --read-only example-image:latest
 
 ## Dockerfile Best Practices
 
-## Docker volume permissions Best Practices
+## Docker volumes and files permissions Best Practices
 
 ## Other Docker Best Practices
+
+
+##### Layer sanity
+
+Remember that order in the Dockerfile instructions is very important.
+
+Since `RUN`, `COPY`, `ADD`, and other instructions will create a new container layer, grouping multiple commands together will reduce the number of layers.
+
+For example, instead of:
+
+```dockerfile
+FROM ubuntu 
+RUN apt-get install -y wget 
+RUN wget https://…/downloadedfile.tar 
+RUN tar xvzf downloadedfile.tar 
+RUN rm downloadedfile.tar 
+RUN apt-get remove wget
+```
+
+It would be a Dockerfile best practice to do:
+
+```dockerfile
+FROM ubuntu 
+RUN apt-get install wget && wget https://…/downloadedfile.tar && tar xvzf downloadedfile.tar && rm downloadedfile.tar && apt-get remove wget
+```
+Also, place the commands that are less likely to change, and easier to cache, first.
+
+Instead of:
+
+```dockerfile 
+FROM ubuntu 
+COPY source/* . 
+RUN apt-get install nodejs 
+ENTRYPOINT ["/usr/bin/node", "/main.js"]
+```
+
+It would be better to do:
+
+```dockerfile
+FROM ubuntu 
+RUN apt-get install nodejs 
+COPY source/* . 
+ENTRYPOINT ["/usr/bin/node", "/main.js"]
+```
+
+  
+The `nodejs` package is less likely to change than our application source.
+
+Please remember that executing a `rm` command removes the file on the next layer, but it is still available and can be accessed, as the final image filesystem is composed from all the previous layers.
+
+So **don’t copy confidential files and then remove them**, they will be not visible in the final container filesystem but still be easily accessible.
