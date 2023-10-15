@@ -206,8 +206,6 @@ Some services (like Nginx, MySql or PHP-FPM...) create a user during their insta
 RUN groupadd -f www-data && \
     (id -u www-data &> /dev/null || useradd -G www-data www-data -D)
 
-
-
 # run the container under such user
 USER www-data
 ```
@@ -230,14 +228,14 @@ then you can assign the UID and GID during the build either by specifying
 version: '3.8'
 # Services
 services:
-	#Nginx Service
-	nginx:
-		build:
-			context: .
-			dockerfile: docker/nginx.Dockerfile
-			args:
-				UID: ${XUID}
-				GID: ${XGID}
+  #Nginx Service
+  nginx:
+    build:
+	  context: .
+	    dockerfile: docker/nginx.Dockerfile
+	    args:
+		  UID: ${XUID}
+		  GID: ${XGID}
 ```
 
 and then 
@@ -249,7 +247,6 @@ $ export XGID=$(id -g)
 
 #Then refresh the file (or open a new terminal):
 $ source ~/.bashrc # or '. ~/.bashrc'
-## Other Docker Best Practices
 ```
 
 ###### 3.Adjusting the permission during the build
