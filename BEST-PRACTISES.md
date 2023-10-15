@@ -231,11 +231,11 @@ services:
   #Nginx Service
   nginx:
     build:
-	  context: .
-	  dockerfile: docker/nginx.Dockerfile
-	  args:
-	    UID: ${XUID}
-	    GID: ${XGID}
+      context: .
+      dockerfile: docker/nginx.Dockerfile
+      args:
+        UID: ${XUID}
+        GID: ${XGID}
 ```
 
 and then 
