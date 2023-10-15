@@ -225,3 +225,11 @@ The `nodejs` package is less likely to change than our application source.
 Please remember that executing a `rm` command removes the file on the next layer, but it is still available and can be accessed, as the final image filesystem is composed from all the previous layers.
 
 So **don’t copy confidential files and then remove them**, they will be not visible in the final container filesystem but still be easily accessible.
+
+##### Include health-checks
+
+Adding a `HEALTHCHECK` to your Docker image is important in ensuring your application runs correctly and ensuring the container reliability . A `HEALTHCHECK` is a command that Docker runs to check the status of your application. If the command returns a non-zero exit code, Docker will consider the container unhealthy.
+
+Adding a `HEALTHCHECK` to your Docker image is a simple but effective way to ensure your application runs correctly and detects any issues before they become critical.
+
+Read more about this [here](#DOCKERFILE.md)
