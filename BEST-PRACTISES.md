@@ -232,10 +232,10 @@ services:
   nginx:
     build:
 	  context: .
-	    dockerfile: docker/nginx.Dockerfile
-	    args:
-		  UID: ${XUID}
-		  GID: ${XGID}
+	  dockerfile: docker/nginx.Dockerfile
+	  args:
+	    UID: ${XUID}
+	    GID: ${XGID}
 ```
 
 and then 
