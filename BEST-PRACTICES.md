@@ -3,6 +3,40 @@
 
 Notes about some of the best docker practices for improving Docker security, optimize the image size, writing cleaner and more maintainable Dockerfiles, handling volumes permissions and many more.
 
+
+# Table Of Contents
+
+- **[Docker Security Best Practices](#)**
+	- **[Docker daemon security](#)**
+		- **[Don't expose the Docker daemon socket](#)**
+		- **[Use TLS if you must expose the daemon socket](#)**
+		- **[Enable rootless mode where possible](#)**
+		- **[Keep Docker updated](#)**
+		- **[Disable inter-container communication](#)**
+		- **[Enable OS-level security protections (SELinux/Seccomp/AppArmor)](#)**
+		- **[Harden your host](#)**
+		- **[Enable user namespace remapping](#)**
+	- **[Docker image security](#)**
+		- **[Use trusted/minimal base images](#)**
+		- **[Regularly rebuild your images](#)**
+		- **[Use image vulnerability scanners](#)**
+		- **[Use Docker content trust to verify image authenticity](#)**
+		- **[Lint your Dockerfiles to detect unsafe misconfigurations](#)**
+	- **[Docker container security](#)**
+		- **[Don't expose unnecessary ports](#)**
+		- **[Don't start containers in privileged mode](#)**
+		- **[Drop capabilities when you start containers](#)**
+		- **[Limit the resources access for containers](#)**
+		- **[Ensure container processes run as a non-root user](#)**
+		- **[Prevent containers from escalating privileges](#)**
+		- **[Use read-only filesystem mode](#)**
+- **[Docker volumes and files permissions Best Practices](#)**
+		- **[Introduction](#)**
+		- **[Solutions](#)**
+- **[Docker volumes and files permissions Best Practices](#)**
+		- **[Layer sanity](#)**
+		- **[Include health-checks](#)**
+
 ## Docker Security Best Practices
 
 ##### Docker daemon security
@@ -97,7 +131,7 @@ Linting your Dockerfiles before you build them is an easy way to spot common mi
 
 Fixing detected problems before you build will help ensure your images are secure and reliable. This is another process that’s worth incorporating into your CI pipelines.
 
-##### Docker container security best practices
+##### Docker container security
 
 The settings you apply to your Docker containers at runtime affect the security of your containerized applications, as well as your Docker host. Here are some techniques which help prevent containers from posing a threat.
 
@@ -265,6 +299,10 @@ RUN install -o www-data -g www-data /dev/null /var/run/nginx.pid
 RUN install -o mysql -g mysql -d /var/log/mysql && \
     install -o mysql -g mysql /dev/null /var/log/mysql/error.log && \
 ```
+
+**Note** : You can also enable userns-remap on Docker daemon
+
+## Other Docker Best practices
 
 ##### Layer sanity
 
