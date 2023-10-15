@@ -168,13 +168,30 @@ Few containerized applications need to write directly to their filesystem. Optin
 $ docker run --read-only example-image:latest
 ```
 
-
-## Dockerfile Best Practices
-
 ## Docker volumes and files permissions Best Practices
 
-## Other Docker Best Practices
+##### Introduction
 
+The whole issue with file permissions in docker containers comes from the fact that the Docker host shares file permissions with containers (at least, in Linux). Let me remind you here that file permissions on _bind mounts_ are shared between the host and the containers. Whenever we create a file on host using a user with `UID x`, this files will have x as owner UID inside the container, too. And this will happen no matter if there is a user with UID equal to x inside the container. The same holds whenever a file is created inside the container by a user with UID equal to y (or a process running under this user). This file will appear on the host with owner UID equal to y.
+
+Docker containers share the same kernel with the host (the server where Docker daemon runs). Since there is only one kernel, there is also only one set of UIDs and GIDs for the host and all the containers. I am saying “UIDs and GIDs” instead of “users and groups” because the second one is a more generic terminology and I want to point out the difference. User names and group names are not shared! They are not part of the kernel. They are managed by external (to the kernel) tools (like /etc/passwd) who map user names to UID and group names to GIDs. So, you can have the same UID mapped to different user name in each container or the host. And because of that the root user on host is the same with the root user in any container (they have the same UID).
+
+<p align="center">
+<img src="./images/docker_kernel_uid.png"/>
+</p>
+
+- Security issues may rise in a production system. If a container is compromised and the container is executed as root (uid = 0), then the intruder has access to any file of the host filesystem that has been loaded to the container filesystem through a mount. The owner UID of files that belong to the host root will be 0 in the container. So, they will be accessible to the intruder.
+
+- Another issue is related to the user under which the build process of a docker image is executed. This user is the user under which `RUN`, `CMD` and `ENTRYPOINT` directives of Dockerfile are executed. So, it determines the permissions of files and directories that are created during the build process (e.g when we use composer or Node to retrieve files from external repositories into the container). If this user is the “root”, then these files will not be accessible from web server or the CGI server, except if the server is running as root (something rare and undesirable). What is more, if we use bind mounts for development, these files will probably be not accessible from our IDE (which runs on the host under our local user).
+
+- Files created by the developer (created on host and mounted to the container) will have as owner uid the one of the developer’s host account and will probably be not accessible by the web server that runs inside the container. And this is true not only for the image build process but also for changes that happen in run-time.
+
+##### Solutions
+
+
+
+
+## Other Docker Best Practices
 
 ##### Layer sanity
 
