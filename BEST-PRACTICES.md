@@ -360,4 +360,4 @@ Adding a `HEALTHCHECK` to your Docker image is important in ensuring your applic
 
 Adding a `HEALTHCHECK` to your Docker image is a simple but effective way to ensure your application runs correctly and detects any issues before they become critical.
 
-Read more about this [here](#DOCKERFILE.md)
+Read more about this [here](DOCKERFILE.md)
