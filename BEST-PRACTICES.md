@@ -6,36 +6,36 @@ Notes about some of the best docker practices for improving Docker security, opt
 
 # Table Of Contents
 
-- **[Docker Security Best Practices](#)**
+- **[Docker Security Best Practices](#docker-security-best-practices)**
 	- **[Docker daemon security](#)**
-		- **[Don't expose the Docker daemon socket](#)**
-		- **[Use TLS if you must expose the daemon socket](#)**
-		- **[Enable rootless mode where possible](#)**
-		- **[Keep Docker updated](#)**
-		- **[Disable inter-container communication](#)**
-		- **[Enable OS-level security protections (SELinux/Seccomp/AppArmor)](#)**
-		- **[Harden your host](#)**
-		- **[Enable user namespace remapping](#)**
-	- **[Docker image security](#)**
-		- **[Use trusted/minimal base images](#)**
-		- **[Regularly rebuild your images](#)**
-		- **[Use image vulnerability scanners](#)**
-		- **[Use Docker content trust to verify image authenticity](#)**
-		- **[Lint your Dockerfiles to detect unsafe misconfigurations](#)**
-	- **[Docker container security](#)**
-		- **[Don't expose unnecessary ports](#)**
-		- **[Don't start containers in privileged mode](#)**
-		- **[Drop capabilities when you start containers](#)**
-		- **[Limit the resources access for containers](#)**
-		- **[Ensure container processes run as a non-root user](#)**
-		- **[Prevent containers from escalating privileges](#)**
-		- **[Use read-only filesystem mode](#)**
-- **[Docker volumes and files permissions Best Practices](#)**
-		- **[Introduction](#)**
-		- **[Solutions](#)**
-- **[Docker volumes and files permissions Best Practices](#)**
-		- **[Layer sanity](#)**
-		- **[Include health-checks](#)**
+		- **[Don't expose the Docker daemon socket](#dont-expose-the-docker-daemon-socket)**
+		- **[Use TLS if you must expose the daemon socket](#docker-daemon-security)**
+		- **[Enable rootless mode where possible](#use-tls-if-you-must-expose-the-daemon-socket)**
+		- **[Keep Docker updated](#keep-docker-updated)**
+		- **[Disable inter-container communication](#disable-inter-container-communication)**
+		- **[Enable OS-level security protections (SELinux/Seccomp/AppArmor)](#enable-os-level-security-protections-selinuxseccompapparmor)**
+		- **[Harden your host](#harden-your-host)**
+		- **[Enable user namespace remapping](#enable-user-namespace-remapping)**
+	- **[Docker image security](#docker-image-security)**
+		- **[Use trusted/minimal base images](#use-trustedminimal-base-images)**
+		- **[Regularly rebuild your images](#regularly-rebuild-your-images)**
+		- **[Use image vulnerability scanners](#use-image-vulnerability-scanners)**
+		- **[Use Docker content trust to verify image authenticity](#use-docker-content-trust-to-verify-image-authenticity)**
+		- **[Lint your Dockerfiles to detect unsafe misconfigurations](#lint-your-dockerfiles-to-detect-unsafe-misconfigurations)**
+	- **[Docker container security](#docker-container-security)**
+		- **[Don't expose unnecessary ports](#dont-expose-unnecessary-ports)**
+		- **[Don't start containers in privileged mode](#dont-start-containers-in-privileged-mode)**
+		- **[Drop capabilities when you start containers](#drop-capabilities-when-you-start-containers)**
+		- **[Limit the resources access for containers](#limit-the-resources-access-for-containers)**
+		- **[Ensure container processes run as a non-root user](#ensure-container-processes-run-as-a-non-root-user)**
+		- **[Prevent containers from escalating privileges](#prevent-containers-from-escalating-privileges)**
+		- **[Use read-only filesystem mode](#use-read-only-filesystem-mode)**
+- **[Docker volumes and files permissions Best Practices](#docker-volumes-and-files-permissions-best-practices)**
+		- **[Introduction](#introduction)**
+		- **[Solutions](#solutions)**
+- **[Docker volumes and files permissions Best Practices](#other-docker-best-practices)**
+		- **[Layer sanity](#layer-sanity)**
+		- **[Include health-checks](#include-health-checks)**
 
 ## Docker Security Best Practices
 
