@@ -7,7 +7,7 @@ Notes about some of the best docker practices for improving Docker security, opt
 # Table Of Contents
 
 - **[Docker Security Best Practices](#docker-security-best-practices)**
-	- **[Docker daemon security](#)**
+	- **[Docker daemon security](#docker-daemon-security)**
 		- **[Don't expose the Docker daemon socket](#dont-expose-the-docker-daemon-socket)**
 		- **[Use TLS if you must expose the daemon socket](#docker-daemon-security)**
 		- **[Enable rootless mode where possible](#use-tls-if-you-must-expose-the-daemon-socket)**
@@ -31,11 +31,11 @@ Notes about some of the best docker practices for improving Docker security, opt
 		- **[Prevent containers from escalating privileges](#prevent-containers-from-escalating-privileges)**
 		- **[Use read-only filesystem mode](#use-read-only-filesystem-mode)**
 - **[Docker volumes and files permissions Best Practices](#docker-volumes-and-files-permissions-best-practices)**
-		- **[Introduction](#introduction)**
-		- **[Solutions](#solutions)**
+	- **[Introduction](#introduction)**
+	- **[Solutions](#solutions)**
 - **[Docker volumes and files permissions Best Practices](#other-docker-best-practices)**
-		- **[Layer sanity](#layer-sanity)**
-		- **[Include health-checks](#include-health-checks)**
+	- **[Layer sanity](#layer-sanity)**
+	- **[Include health-checks](#include-health-checks)**
 
 ## Docker Security Best Practices
 
