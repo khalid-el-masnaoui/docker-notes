@@ -157,6 +157,10 @@ $ docker container prune #Removes all stopped containers
 $ docker rename NAME-OLD NAME-NEW #Rename a container
 $ docker container inspect [ID/NAME]  #Display detailed information on one or more containers such as connected Networks settings, container IP,  volumes , Port Bindings ...
 $ docker attach  [ID/NAME] #Attach to a running container and view its output
+
+# copy files/directories between host and container
+$ docker cp [NAME]:/PATH/ /local/path  #container -> host
+$ docker cp /local/path [NAME]:/path/  #host -> container
 ```
 **Options & Additional commands**<br>
 
