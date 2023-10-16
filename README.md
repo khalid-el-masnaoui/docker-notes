@@ -425,6 +425,8 @@ $ docker run --volumes-from 4920 \
 **Note** : `--volumes-from`can be use in order to Back up, restore, or migrate data volumes.
 In practice `--volumes-from` is usually used to link volumes between running containers (volume data migration).
 
+**Note 2** : Dealing with file permissions with docker volumes can be confusing , (between the host and the container), you can read more about such topic in _docker best practices_ notes [here](BEST-PRACTICES.MD)
+
 ## Networking :earth_africa:
 
 Networking is about communication among processes, and Docker’s networking is no different. Docker networking is primarily used to establish communication between Docker containers and the outside world via the host machine where the Docker daemon is running.
