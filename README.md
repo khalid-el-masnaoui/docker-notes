@@ -1,5 +1,5 @@
 # Docker Notes
-A cheat-sheets and quick but relatively-detailed reference guide for docker CLI commands and some of docker concepts
+A cheat-sheets and quick but relatively-detailed reference guide for _docker CLI_ commands and some of docker concepts
 
 This repository containes a complete _**set**_ of DOCKER NOTES organized as follow:
 
