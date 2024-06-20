@@ -48,7 +48,7 @@ This repository containes a complete _**set**_ of DOCKER NOTES organized as foll
 		-  **[Limit Docker Container CPU Usage](#limit-cpu)**
 
 ## Docker CLI :whale:
-Show commands & management commands, versions and infos
+Show commands & management commands, versions and informations
 ```bash
 $ docker #Display Docker commands
 $ docker version #Show the Docker version information
