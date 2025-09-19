@@ -1,13 +1,22 @@
 # Docker Notes
+
+```
+  ____             _             
+ |  _ \  ___   ___| | _____ _ __ 
+ | | | |/ _ \ / __| |/ / _ \ '__|
+ | |_| | (_) | (__|   <  __/ |   
+ |____/ \___/ \___|_|\_\___|_|   
+                                 
+```
 A cheat-sheets and quick but relatively-detailed reference guide for _docker CLI_ commands and some of docker concepts
 
 This repository containes a complete _**set**_ of DOCKER NOTES organized as follow:
 
-- [Docker Architecture](ARCHITECTURE.md) 
-- [Docker CLI ](README.md) (_current file_)
+- [Docker Architecture](docker/Notes/ARCHITECTURE.md) 
+- [Docker CLI ](docker/Notes/README.md) (_current file_)
 - [Dockerfile](DOCKERFILE.md)
 - [Docker Compose](DOCKER-COMPOSE.md)
-- [Docker Best Practices](BEST-PRACTICES.md)
+- [Docker Best Practices](docker/Notes/BEST-PRACTICES.md)
 
 # Table Of Contents
 
@@ -58,7 +67,7 @@ $ docker info #Display system-wide information
 ## Images :framed_picture:
 Images are read-only templates containing instructions for creating a container. A Docker image creates containers to run on the Docker platform.
 Think of an image like a blueprint or snapshot of what will be in a container when it runs.
-[discover-docker-images-and-containers-concepts-here](ARCHITECTURE.md)
+[discover-docker-images-and-containers-concepts-here](docker/Notes/ARCHITECTURE.md)
 ##### Download an image from a registry (Such as Docker Hub)
 ```bash
 $ docker pull image
@@ -121,7 +130,7 @@ $ docker image inspect [ID/NAME]  #Display detailed information on one or more i
 
 ## Containers :ship:
 A container is an isolated place where an application runs without affecting the rest of the system and without the system impacting the application. 
-[discover-docker-images-and-containers-concepts-here](ARCHITECTURE.md)
+[discover-docker-images-and-containers-concepts-here](docker/Notes/ARCHITECTURE.md)
 ##### Create and run a new container from an image
 ```bash
 docker run --name NAME --rm -itd -p PORTS  --net=<custom_net> --ip=IP image COMMAND
@@ -425,7 +434,7 @@ $ docker run --volumes-from 4920 \
 **Note** : `--volumes-from`can be use in order to Back up, restore, or migrate data volumes.
 In practice `--volumes-from` is usually used to link volumes between running containers (volume data migration).
 
-**Note 2** : Dealing with file permissions with docker volumes can be confusing , (between the host and the container), you can read more about such topic in _docker best practices_ notes [here](BEST-PRACTICES.MD)
+**Note 2** : Dealing with file permissions with docker volumes can be confusing , (between the host and the container), you can read more about such topic in _docker best practices_ notes [here](docker/Notes/BEST-PRACTICES.md)
 
 ## Networking :earth_africa:
 
