@@ -65,7 +65,7 @@ In the example above, each instruction creates one layer:
 - `RUN` builds your application with `make`.
 - `CMD` specifies what command to run within the container.
 
-**Note** : When you run an image and generate a container, you add a new _writable layer_, also called the container layer, on top of the underlying layers. All changes made to the running container, such as writing new files, modifying existing files, and deleting files, are written to this writable container layer (writable layer is not persistent,  [read about that here](README.md#volumes-card_file_box) ).
+**Note** : When you run an image and generate a container, you add a new _writable layer_, also called the container layer, on top of the underlying layers. All changes made to the running container, such as writing new files, modifying existing files, and deleting files, are written to this writable container layer (writable layer is not persistent,  [read about that here](docker/Notes/README.md#volumes-card_file_box) ).
 
 
 ## Dockerfile Instructions Reference
@@ -266,7 +266,7 @@ _Multi-stage builds_ allow us to create a Dockerfile that defines multiple stag
 
 The key advantage of using multi-stage builds is that it allows developers to reduce the size of the final image. By breaking down the build process into smaller stages, it becomes easier to remove unnecessary files and dependencies that are not needed in the final image. This can significantly reduce the size of the image, which can lead to faster deployment times and lower storage costs.
 
-In addition to reducing image size, multi-stage builds can also improve build performance. By breaking down the build process into smaller stages, Docker can cache the intermediate images and reuse them if the source code or dependencies haven't changed. This can lead to faster builds and shorter development cycles. [Read about docker best practices here](BEST-PRACTICES.md)
+In addition to reducing image size, multi-stage builds can also improve build performance. By breaking down the build process into smaller stages, Docker can cache the intermediate images and reuse them if the source code or dependencies haven't changed. This can lead to faster builds and shorter development cycles. [Read about docker best practices here](docker/Notes/BEST-PRACTICES.md)
 
 ##### Use multi-stage builds
 
